@@ -5,9 +5,9 @@ date:   2015-01-31 12:02:03
 categories: node
 ---
 
-I've recently become interested in real world examples of vulnerabilities in Node.js applications, which allow `Server Side Javascript injection`. One advisory I came across was <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205">CVE-2014-7205</a> discovered by Jarda Kotěšovec in a <a href="https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4">Basmaster plugin</a> which allows arbitrary Javascript injection.
+I've recently become interested in real world examples of vulnerabilities in Node.js applications, which allow `Server Side Javascript Injection`. One advisory I came across was <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205">CVE-2014-7205</a> discovered by Jarda Kotěšovec in a <a href="https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4">Basmaster plugin</a> which allows arbitrary Javascript injection.
 
-I decided to mock up a very simple example of user input passed to an eval() execution sink, to demonstrate an injection of a simple web shell into the server. This web shell will only exist within the current node.js process, and will not be written to disk.
+I decided to mock up a simple example of user input passed to an eval() execution sink, to demonstrate an injection of a simple web shell into the server. This web shell will only exist within the current node.js process, and will not be written to disk.
 
 This demo application will only allow a single user input selection to keep things simple:
 ![Demo app](/assets/SSJS_ws1.png)

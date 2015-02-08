@@ -6,15 +6,15 @@
 </description>
     <link>http://s1gnalcha0s.github.io/</link>
     <atom:link href="http://s1gnalcha0s.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 08 Feb 2015 17:45:51 -0500</pubDate>
-    <lastBuildDate>Sun, 08 Feb 2015 17:45:51 -0500</lastBuildDate>
+    <pubDate>Sun, 08 Feb 2015 18:12:13 -0500</pubDate>
+    <lastBuildDate>Sun, 08 Feb 2015 18:12:13 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
         <title>SSJS Web Shell Injection</title>
-        <description>&lt;p&gt;I’ve recently become interested in real world examples of vulnerabilities in Node.js applications, which allow &lt;code&gt;Server Side Javascript injection&lt;/code&gt;. One advisory I came across was &lt;a href=&quot;http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205&quot;&gt;CVE-2014-7205&lt;/a&gt; discovered by Jarda Kotěšovec in a &lt;a href=&quot;https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4&quot;&gt;Basmaster plugin&lt;/a&gt; which allows arbitrary Javascript injection.&lt;/p&gt;
+        <description>&lt;p&gt;I’ve recently become interested in real world examples of vulnerabilities in Node.js applications, which allow &lt;code&gt;Server Side Javascript Injection&lt;/code&gt;. One advisory I came across was &lt;a href=&quot;http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205&quot;&gt;CVE-2014-7205&lt;/a&gt; discovered by Jarda Kotěšovec in a &lt;a href=&quot;https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4&quot;&gt;Basmaster plugin&lt;/a&gt; which allows arbitrary Javascript injection.&lt;/p&gt;
 
-&lt;p&gt;I decided to mock up a very simple example of user input passed to an eval() execution sink, to demonstrate an injection of a simple web shell into the server. This web shell will only exist within the current node.js process, and will not be written to disk.&lt;/p&gt;
+&lt;p&gt;I decided to mock up a simple example of user input passed to an eval() execution sink, to demonstrate an injection of a simple web shell into the server. This web shell will only exist within the current node.js process, and will not be written to disk.&lt;/p&gt;
 
 &lt;p&gt;This demo application will only allow a single user input selection to keep things simple:
 &lt;img src=&quot;/assets/SSJS_ws1.png&quot; alt=&quot;Demo app&quot; /&gt;&lt;/p&gt;
