@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Activities 
-permalink: /activities/
+title: Stuff 
+permalink: /stuff/
 ---
 
 * Blog post: [This book reads you - exploiting services and readers that support the ePub book format](/epub/2017/01/25/This-book-reads-you.html)
@@ -14,7 +14,10 @@ permalink: /activities/
 
 * Blog post: [Journey into WebSockets Authentication/Authorization](http://stratumsecurity.ghost.io/2016/06/13/websockets-auth/) -  
 [https://nodesecurity.io/advisories/90](https://nodesecurity.io/advisories/90) Node.js module, authentication bypass using WebSockets)
-![WS Auth](/assets/wsauth.jpg)
 
 * [The Pentagon's first bug bounty program](https://medium.com/@SecDef/the-pentagons-first-bug-bounty-exceeded-all-expectations-a5a44faa4d81): Meeting SecDef, and some of the nice people at Defense Digital Service (DDS)
-![Defense Digital Service visit](/assets/dds.png)
+[[1](/assets/dds.png)]
+
+* [CVE-2014-2736](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2736) MODX <=2.2.13.
+
+* [CVE-2014-2737](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2737) KnowledgeTree <=3.7.0.2.
