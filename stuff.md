@@ -12,11 +12,13 @@ permalink: /stuff/
 
 * [CVE-2016-7666](https://support.apple.com/en-us/HT207432) Apple Transporter 1.9.2 XXE
 
-* Blog post: [Journey into WebSockets Authentication/Authorization](http://stratumsecurity.ghost.io/2016/06/13/websockets-auth/) -  
+* Blog post: [Journey into WebSockets Authentication/Authorization](https://stratumsecurity.ghost.io/2016/06/13/websockets-auth/) -  
 [https://nodesecurity.io/advisories/90](https://nodesecurity.io/advisories/90) Node.js module, authentication bypass using WebSockets)
 
 * [The Pentagon's first bug bounty program](https://medium.com/@SecDef/the-pentagons-first-bug-bounty-exceeded-all-expectations-a5a44faa4d81): Meeting SecDef, and some of the nice people at Defense Digital Service (DDS)
 [[1](/assets/dds.png)]
+
+* Blog post: [SSJS Web Shell Injection](/node/2015/01/31/SSJS-webshell-injection.html)
 
 * [CVE-2014-2736](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2736) MODX <=2.2.13.
 
