@@ -21,5 +21,3 @@ permalink: /stuff/
 * Blog post: [SSJS Web Shell Injection](/node/2015/01/31/SSJS-webshell-injection.html)
 
 * [CVE-2014-2736](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2736) MODX <=2.2.13.
-
-* [CVE-2014-2737](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2737) KnowledgeTree <=3.7.0.2.
