@@ -91,7 +91,7 @@ function showExfil() {
 
 #### Node.js WebSocket Controller:
 
-* curl https://s1gnalchaos.github.com/assets/controller/server.js -o server.js
+* curl https://s1gnalcha0s.github.io/assets/controller/server.js -o server.js
 * npm install websocket
 * node server.js
 

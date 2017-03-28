@@ -6,8 +6,8 @@
 </description>
     <link>http://s1gnalcha0s.github.io/</link>
     <atom:link href="http://s1gnalcha0s.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 27 Mar 2017 17:41:42 -0700</pubDate>
-    <lastBuildDate>Mon, 27 Mar 2017 17:41:42 -0700</lastBuildDate>
+    <pubDate>Mon, 27 Mar 2017 17:51:27 -0700</pubDate>
+    <lastBuildDate>Mon, 27 Mar 2017 17:51:27 -0700</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -107,7 +107,7 @@
 &lt;h4 id=&quot;nodejs-websocket-controller&quot;&gt;Node.js WebSocket Controller:&lt;/h4&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;curl https://s1gnalchaos.github.com/assets/controller/server.js -o server.js&lt;/li&gt;
+  &lt;li&gt;curl https://s1gnalcha0s.github.io/assets/controller/server.js -o server.js&lt;/li&gt;
   &lt;li&gt;npm install websocket&lt;/li&gt;
   &lt;li&gt;node server.js&lt;/li&gt;
 &lt;/ul&gt;
