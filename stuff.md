@@ -4,6 +4,8 @@ title: Stuff
 permalink: /stuff/
 ---
 
+* Blog post: [This book reads you - using JavaScript](/ibooks/epub/2017/03/27/This-book-reads-you-using-JavaScript.html)
+
 * Blog post: [This book reads you - exploiting services and readers that support the ePub book format](/epub/2017/01/25/This-book-reads-you.html)
 
 * [VU#779243](https://www.kb.cert.org/vuls/id/779243) EpubCheck 4.0.1 (IDPF ePub Validator) contains a XML external entity processing vulnerability 
