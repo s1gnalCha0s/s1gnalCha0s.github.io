@@ -63,4 +63,4 @@ Execution of `ls -la /etc`:
 
 This is a really simple example of an application with a SSJS injection vulnerability. Another thing to note is that tools to identify web application vulnerabilities may not have support to detect this vulnerability. At the time of this writing, Burp Suite v1.6.10 did not identify a SSJS injection vulnerability in the demo application.
 
-- `[s1gnalCha0s](https://craigarendt.com)`
+- ![s1gnalCha0s](https://craigarendt.com)
