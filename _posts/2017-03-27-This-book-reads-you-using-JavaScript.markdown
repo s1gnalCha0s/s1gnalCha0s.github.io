@@ -107,4 +107,4 @@ Shoutouts:
 
 Thanks for reading. 👋 
 
-[@craig](https://twitter.com/craig_arendt)
+[@craig](https://twitter.com/signalchaos)

@@ -148,5 +148,5 @@ Thanks to [CERT/CC](http://www.cert.org/) for their help in coordinating with di
 
 If you got this far, thanks for reading. 👋 
 
-[@craig](https://twitter.com/craig_arendt)
+[@craig](https://twitter.com/signalchaos)
 
