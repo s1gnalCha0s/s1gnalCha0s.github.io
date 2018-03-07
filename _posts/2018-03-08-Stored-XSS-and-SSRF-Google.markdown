@@ -71,7 +71,7 @@ eg., contents of poc.dspl/dataset.xml
 </table>
 {% endhighlight %}
 
-Uploading this dataset would return return the response of the HTTP/FTP request in the resulting error condition responses. eg., 
+Uploading this dataset would return the response of the HTTP/FTP request in the resulting error condition responses. eg., 
 
 ![Image](/assets/dspl/ftp-tcp22.png)
 In this example it shows the local SSH banner response which is a service that is not publically accessible.
