@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 07 Mar 2018 11:06:15 -0800</pubDate>
-    <lastBuildDate>Wed, 07 Mar 2018 11:06:15 -0800</lastBuildDate>
+    <pubDate>Wed, 07 Mar 2018 13:11:41 -0800</pubDate>
+    <lastBuildDate>Wed, 07 Mar 2018 13:11:41 -0800</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
     
       <item>
@@ -80,7 +80,7 @@
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/data&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Uploading this dataset would return return the response of the HTTP/FTP request in the resulting error condition responses. eg.,&lt;/p&gt;
+&lt;p&gt;Uploading this dataset would return the response of the HTTP/FTP request in the resulting error condition responses. eg.,&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/dspl/ftp-tcp22.png&quot; alt=&quot;Image&quot; /&gt;
 In this example it shows the local SSH banner response which is a service that is not publically accessible.&lt;/p&gt;

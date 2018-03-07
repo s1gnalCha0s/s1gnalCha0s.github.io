@@ -4,6 +4,8 @@ title: Stuff
 permalink: /stuff/
 ---
 
+* Blog post: [Stored XSS, and SSRF in Google using the Dataset Publishing Language](/dspl/2018/03/07/Stored-XSS-and-SSRF-Google.html)
+
 * Blog post: [This book reads you - using JavaScript](/ibooks/epub/2017/03/27/This-book-reads-you-using-JavaScript.html)
 
 * Blog post: [This book reads you - exploiting services and readers that support the ePub book format](/epub/2017/01/25/This-book-reads-you.html)
