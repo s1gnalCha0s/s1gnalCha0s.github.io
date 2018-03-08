@@ -58,7 +58,7 @@ So anyone who viewed the shared dataset would execute an attackers arbitrary Jav
 Short video showing how this worked before it was fixed. Allows stored XSS in the context of www.google.com using DSPL:
 <p><iframe src="https://player.vimeo.com/video/258923005" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></p>
 
-Dataset Publishing Language also has functionality to allow data to be retrieved from [remote HTTP or FTP sources](https://developers.google.com/public-data/docs/cookbook#remote_data). This functionality allowed SSRF (server-side request forgery) to access localhost service resources (potentially also allows access to internal, non internet accessible systems/devices). eg., 
+Dataset Publishing Language also has functionality to allow data to be retrieved from [remote HTTP or FTP sources](https://developers.google.com/public-data/docs/cookbook#remote_data). This functionality allowed SSRF (server-side request forgery) to access localhost service resources (potentially also allows access to internal, non internet accessible systems/devices).  
 
 eg., contents of poc.dspl/dataset.xml
 {% highlight xml %}
