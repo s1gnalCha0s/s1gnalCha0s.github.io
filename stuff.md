@@ -19,7 +19,7 @@ permalink: /stuff/
 * Blog post: [Journey into WebSockets Authentication/Authorization](https://stratumsecurity.ghost.io/2016/06/13/websockets-auth/) -  
 [https://nodesecurity.io/advisories/90](https://nodesecurity.io/advisories/90) Node.js module, authentication bypass using WebSockets)
 
-* [The Pentagon's first bug bounty program](https://medium.com/@SecDef/the-pentagons-first-bug-bounty-exceeded-all-expectations-a5a44faa4d81): Meeting the Secretary of Defense, and some of the nice people at Defense Digital Service (DDS)
+* [Participating in the Pentagon's first bug bounty program](https://medium.com/@SecDef/the-pentagons-first-bug-bounty-exceeded-all-expectations-a5a44faa4d81): Meeting the Secretary of Defense, and some of the nice people at Defense Digital Service (DDS)
 [[1](/assets/dds.png)] [[2](/assets/craigarendt.jpg)]
 
 * Blog post: [SSJS Web Shell Injection](/node/2015/01/31/SSJS-webshell-injection.html)
