@@ -67,6 +67,53 @@
   <ul class="post-list">
     
       <li>
+        <span class="post-meta">Feb 17, 2020</span>
+
+        <h2>
+          <a class="post-link" href="/logic/2020/02/17/Google-Fiber.html">Plan Change Logic in Google Fiber (Webpass)</a>
+        </h2>
+
+<!-- adding all articles to the front page for now. This will need to be changed later. -->
+	<article class="post-content">
+          <blockquote>
+  <p>“Distracted from Distraction by Distraction” - T.S. Eliot</p>
+</blockquote>
+
+<p>TLDR; Found a simple logic bug when paying my annual Google Fiber bill (Webpass).</p>
+
+<p>I initially added a $50 payment to my Google Fiber (WebPass) annual subscription, and then switched from annual to monthly billing, and saw that $550 (the annual amount) was credited to the account, and $60 was billed to the account for the new subscription.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">POST</span> <span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">plan_changes</span> <span class="nx">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="nx">Host</span><span class="p">:</span> <span class="nx">webpass</span><span class="p">.</span><span class="nx">net</span>
+<span class="nx">Content</span><span class="o">-</span><span class="nx">Type</span><span class="p">:</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">www</span><span class="o">-</span><span class="nx">form</span><span class="o">-</span><span class="nx">urlencoded</span><span class="p">;</span> <span class="nx">charset</span><span class="o">=</span><span class="nx">UTF</span><span class="o">-</span><span class="mi">8</span>
+
+<span class="nx">from_subscription_id</span><span class="o">=</span><span class="mi">12345</span><span class="o">&amp;</span><span class="nx">cashier</span><span class="o">=</span></code></pre></figure>
+
+<p>I then replayed the same API operation that was initially called to change the subscription about six more times and saw that each time I called it $550 was credited to the account, and $60 was billed to the account.</p>
+
+<p><img src="/assets/webpass/1.png" alt="Image" /></p>
+
+<p>At this point there was $2,450 credited to the account, and it showed that the previously invoiced amount had been paid. It would have been fun to call that API operation 100+ more times to see what would happen 😅, but I just reported it instead.</p>
+
+<p><img src="/assets/webpass/2.png" alt="Image" /></p>
+
+<p>It was covered under the Google VRP because Webpass is a 2016 Google Fiber acquisition. A few days later someone took the credits out of my account which reset my account balance back to $0.</p>
+
+<p>Thanks to the Google VRP team. 👋</p>
+
+<p><a href="https://twitter.com/signalchaos">@signalchaos</a></p>
+
+<p>Disclosure timeline stuff:</p>
+<ul>
+  <li>Nov 2019: Reported the plan_changes bug to the Google VRP</li>
+  <li>Jan 2020: Reported an authorization bug in some API operations that allowed customer subscriptions to be changed.</li>
+</ul>
+
+        </article>
+
+      </li>
+    
+      <li>
         <span class="post-meta">Mar 7, 2018</span>
 
         <h2>
@@ -131,7 +178,7 @@
 <p>Short video showing how this worked before it was fixed. Allows stored XSS in the context of www.google.com using DSPL:</p>
 <p><iframe src="https://player.vimeo.com/video/258923005" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe></p>
 
-<p>Dataset Publishing Language also has functionality to allow data to be retrieved from <a href="https://developers.google.com/public-data/docs/cookbook#remote_data">remote HTTP or FTP sources</a>. This functionality allowed SSRF (server-side request forgery) to access localhost service resources (potentially also allows access to internal, non internet accessible systems/devices). eg.,</p>
+<p>Dataset Publishing Language also has functionality to allow data to be retrieved from <a href="https://developers.google.com/public-data/docs/cookbook#remote_data">remote HTTP or FTP sources</a>. This functionality allowed SSRF (server-side request forgery) to access localhost service resources (potentially also allows access to internal, non internet accessible systems/devices).</p>
 
 <p>eg., contents of poc.dspl/dataset.xml</p>
 

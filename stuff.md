@@ -4,6 +4,8 @@ title: Stuff
 permalink: /stuff/
 ---
 
+* Blog post: [Plan Change Logic in Google Fiber (Webpass)](/logic/2020/02/17/Google-Fiber.html)
+
 * Blog post: [Stored XSS, and SSRF in Google using the Dataset Publishing Language](/dspl/2018/03/07/Stored-XSS-and-SSRF-Google.html)
 
 * Blog post: [This book reads you - using JavaScript](/ibooks/epub/2017/03/27/This-book-reads-you-using-JavaScript.html)

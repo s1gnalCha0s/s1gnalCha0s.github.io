@@ -6,9 +6,54 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 07 Mar 2018 13:11:41 -0800</pubDate>
-    <lastBuildDate>Wed, 07 Mar 2018 13:11:41 -0800</lastBuildDate>
-    <generator>Jekyll v3.7.3</generator>
+    <pubDate>Mon, 17 Feb 2020 10:10:15 -0800</pubDate>
+    <lastBuildDate>Mon, 17 Feb 2020 10:10:15 -0800</lastBuildDate>
+    <generator>Jekyll v3.7.4</generator>
+    
+      <item>
+        <title>Plan Change Logic in Google Fiber (Webpass)</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;“Distracted from Distraction by Distraction” - T.S. Eliot&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;TLDR; Found a simple logic bug when paying my annual Google Fiber bill (Webpass).&lt;/p&gt;
+
+&lt;p&gt;I initially added a $50 payment to my Google Fiber (WebPass) annual subscription, and then switched from annual to monthly billing, and saw that $550 (the annual amount) was credited to the account, and $60 was billed to the account for the new subscription.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;POST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;plan_changes&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;HTTP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.1&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;webpass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;net&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;www&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;urlencoded&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;charset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UTF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;from_subscription_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12345&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cashier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I then replayed the same API operation that was initially called to change the subscription about six more times and saw that each time I called it $550 was credited to the account, and $60 was billed to the account.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/webpass/1.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At this point there was $2,450 credited to the account, and it showed that the previously invoiced amount had been paid. It would have been fun to call that API operation 100+ more times to see what would happen 😅, but I just reported it instead.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/webpass/2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It was covered under the Google VRP because Webpass is a 2016 Google Fiber acquisition. A few days later someone took the credits out of my account which reset my account balance back to $0.&lt;/p&gt;
+
+&lt;p&gt;Thanks to the Google VRP team. 👋&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://twitter.com/signalchaos&quot;&gt;@signalchaos&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Disclosure timeline stuff:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Nov 2019: Reported the plan_changes bug to the Google VRP&lt;/li&gt;
+  &lt;li&gt;Jan 2020: Reported an authorization bug in some API operations that allowed customer subscriptions to be changed.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 17 Feb 2020 02:00:00 -0800</pubDate>
+        <link>http://localhost:4000/logic/2020/02/17/Google-Fiber.html</link>
+        <guid isPermaLink="true">http://localhost:4000/logic/2020/02/17/Google-Fiber.html</guid>
+        
+        
+        <category>logic</category>
+        
+      </item>
     
       <item>
         <title>Stored XSS, and SSRF in Google using the Dataset Publishing Language</title>
@@ -68,7 +113,7 @@
 &lt;p&gt;Short video showing how this worked before it was fixed. Allows stored XSS in the context of www.google.com using DSPL:&lt;/p&gt;
 &lt;p&gt;&lt;iframe src=&quot;https://player.vimeo.com/video/258923005&quot; width=&quot;640&quot; height=&quot;360&quot; frameborder=&quot;0&quot; webkitallowfullscreen=&quot;&quot; mozallowfullscreen=&quot;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
 
-&lt;p&gt;Dataset Publishing Language also has functionality to allow data to be retrieved from &lt;a href=&quot;https://developers.google.com/public-data/docs/cookbook#remote_data&quot;&gt;remote HTTP or FTP sources&lt;/a&gt;. This functionality allowed SSRF (server-side request forgery) to access localhost service resources (potentially also allows access to internal, non internet accessible systems/devices). eg.,&lt;/p&gt;
+&lt;p&gt;Dataset Publishing Language also has functionality to allow data to be retrieved from &lt;a href=&quot;https://developers.google.com/public-data/docs/cookbook#remote_data&quot;&gt;remote HTTP or FTP sources&lt;/a&gt;. This functionality allowed SSRF (server-side request forgery) to access localhost service resources (potentially also allows access to internal, non internet accessible systems/devices).&lt;/p&gt;
 
 &lt;p&gt;eg., contents of poc.dspl/dataset.xml&lt;/p&gt;
 
